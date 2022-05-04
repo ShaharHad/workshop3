@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseFuctions
 {
-    public Connection getConnector()
+    public static Connection getConnector()
     {
         String url = "";
         try
@@ -18,12 +18,10 @@ public class DatabaseFuctions
         }
     }
 
-    public void save(String username)
+    public void save(Connection conn, String username)
     {
-        Connection conn;
         try
         {
-            conn = getConnector();
             Statement st = conn.createStatement();
             st.executeUpdate("INSERT INTO Customers " +
                     "VALUES (1001, 'Simpson', 'Mr.', 'Springfield', 2001)");
