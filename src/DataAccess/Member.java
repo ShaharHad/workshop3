@@ -1,4 +1,8 @@
 package DataAccess;
 
-public class Member {
+public class Member
+{
+    String userName;
+    String password;
+    String name;
 }

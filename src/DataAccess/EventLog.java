@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class EventLog {
+public class EventLog
+{
+
 }

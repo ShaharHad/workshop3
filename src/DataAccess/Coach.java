@@ -1,4 +1,7 @@
 package DataAccess;
 
-public class Coach {
+public class Coach
+{
+    String role;
+    String training;
 }

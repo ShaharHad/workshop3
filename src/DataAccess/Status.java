@@ -1,4 +1,6 @@
 package DataAccess;
 
-public enum Status {
+public enum Status
+{
+    Success, Failure
 }

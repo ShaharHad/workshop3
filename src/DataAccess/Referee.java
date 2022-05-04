@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class Referee {
+public class Referee
+{
+    String training;
 }

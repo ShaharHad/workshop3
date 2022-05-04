@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class MainReferee {
+public class MainReferee extends Referee
+{
+
 }

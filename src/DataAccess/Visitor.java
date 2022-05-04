@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class Visitor {
+public class Visitor
+{
+
 }

@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class Representative {
+public class Representative
+{
+
 }

@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class Owner {
+public class Owner
+{
+
 }

@@ -1,4 +1,6 @@
 package DataAccess;
 
-public class Manager {
+public class Manager
+{
+
 }
