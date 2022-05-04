@@ -1,5 +1,6 @@
 package Domain;
 import DataAccess.DatabaseFuctions;
+
 import java.sql.Connection;
 
 public class Owner extends Member
