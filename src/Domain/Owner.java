@@ -1,6 +1,5 @@
 package Domain;
 import DataAccess.DatabaseFuctions;
-import java.sql.Connection;
 
 public class Owner extends Member
 {
@@ -11,7 +10,19 @@ public class Owner extends Member
 
     public Status assignManager(String username)
     {
-        Connection conn = DatabaseFuctions.getConnector();
+        DatabaseFuctions.update("Manager");
+        return Status.Success;
+    }
+
+    public Status assignCoach(String username)
+    {
+        DatabaseFuctions.update("Coach");
+        return Status.Success;
+    }
+
+    public Status assignPlayer(String username)
+    {
+        DatabaseFuctions.update("Player");
         return Status.Success;
     }
 }

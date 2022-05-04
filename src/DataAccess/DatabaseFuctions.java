@@ -18,7 +18,7 @@ public class DatabaseFuctions
         }
     }
 
-    public void save(Connection conn, String username)
+    public static void save(Connection conn, String username)
     {
         try
         {
@@ -33,12 +33,12 @@ public class DatabaseFuctions
 
     }
 
-    public void update()
+    public static void update(String role)
     {
 
     }
 
-    public void delete()
+    public static void delete()
     {
 
     }
