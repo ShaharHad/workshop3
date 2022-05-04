@@ -1,4 +1,6 @@
 package Domain;
 
-public class Fan {
+public class Fan
+{
+
 }
