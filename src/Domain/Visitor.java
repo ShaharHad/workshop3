@@ -1,4 +1,4 @@
-package DataAccess;
+package Domain;
 
 public class Visitor
 {
