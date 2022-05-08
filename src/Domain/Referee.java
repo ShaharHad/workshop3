@@ -8,10 +8,12 @@ public class Referee extends Member
         super(username, password, name);
         this.training = training;
     }
+
     public Status updateInfo(){
         return Status.Success;
     }
-    public void viewGameAssognment(){
+
+    public void viewGameAssignment(){
     }
 
 
@@ -32,5 +34,12 @@ public class Referee extends Member
             return Status.Success;
         }
         return  Status.Failure;
+    }
+
+    public Status updateEventLog(){
+        return Status.Success;
+    }
+    public Status setGameSocore(){
+        return Status.Success;
     }
 }
