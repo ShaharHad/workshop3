@@ -17,4 +17,8 @@ public class Coach extends Member
     public Status updateInfo(){
         return Status.Success;
     }
+    public Status Delete(){
+        return Status.Success;
+    }
+
 }
