@@ -13,8 +13,9 @@ public class Representative extends Member
     public Status assignGame(){
         return Status.Success;
     }
+
     public Status assignRef(){
-        Referee
+
         return Status.Success;
     }
     public Status setSocerPolicy(){
