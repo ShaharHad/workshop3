@@ -4,6 +4,16 @@ public class Referee extends Member
 {
     String training;
     boolean IsMainReferee=false;
+    boolean Is_free=false;
+
+    public void setMainReferee(boolean mainReferee) {
+        IsMainReferee = mainReferee;
+    }
+
+    public void setIs_free(boolean is_free) {
+        Is_free = is_free;
+    }
+
     public Referee(String username, String password, String name, String training) {
         super(username, password, name);
         this.training = training;
