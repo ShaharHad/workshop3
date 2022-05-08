@@ -3,7 +3,7 @@ package Domain;
 public class Referee extends Member
 {
     String training;
-
+    boolean IsMainReferee=false;
     public Referee(String username, String password, String name, String training) {
         super(username, password, name);
         this.training = training;
@@ -14,7 +14,23 @@ public class Referee extends Member
     public void viewGameAssognment(){
     }
 
+
+    ///////////////////__Only_IF_IsMainReferee_///////////////////////
     public Status updateEventLog(){
-        return Status.Success;
+
+        if (IsMainReferee)
+        {
+
+            return Status.Success;
+        }
+        return  Status.Failure;
+    }
+    public Status setGameSocore(){
+        if (IsMainReferee)
+        {
+
+            return Status.Success;
+        }
+        return  Status.Failure;
     }
 }
