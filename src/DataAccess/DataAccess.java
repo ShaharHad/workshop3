@@ -6,7 +6,9 @@ import java.sql.Statement;
 
 public interface DataAccess<T>
 {
-    void save(String username);
-    void update();
-    void delete();
+    public void save(String username , String password);
+    public void update();
+    public void delete();
+    public boolean IsExist(String user_name) ;
+
 }
