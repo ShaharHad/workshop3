@@ -7,12 +7,14 @@ public class Team
     ArrayList<Player> players;
     ArrayList<Coach> coaches;
     ArrayList<Manager> managers;
-    Owner owner;
+    ArrayList<Owner> owners;
 
-    public Team(ArrayList<Player> players, ArrayList<Coach> coaches, ArrayList<Manager> managers, Owner owner) {
-        this.players = players;
-        this.coaches = coaches;
-        this.managers = managers;
-        this.owner = owner;
+    public Team(Owner owner) throws Exception
+    {
+        this.players = new ArrayList<>();
+        this.coaches = new ArrayList<>();
+        this.managers = new ArrayList<>();
+        if (owner == null) { throw new Exception("owner is null!"); }
+        this.owners.add(owner);
     }
 }
