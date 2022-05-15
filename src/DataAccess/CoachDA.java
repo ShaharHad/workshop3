@@ -15,7 +15,7 @@ public class CoachDA implements DataAccess
         {
             conn = getConnector();
             Statement st = conn.createStatement();
-            st.executeUpdate("INSERT INTO Customers " +
+            st.executeUpdate("INSERT INTO coaches " +
                     "VALUES (1001, 'Simpson', 'Mr.', 'Springfield', 2001)");
         }
         catch (SQLException e)
