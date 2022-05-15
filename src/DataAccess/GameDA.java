@@ -1,16 +1,18 @@
+//package DataAccess;
+
 package DataAccess;
-import Domain.Table;
+        import Domain.Table;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.lang.*;
+        import java.io.*;
+        import java.sql.Connection;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        import java.lang.*;
 
-import static DataAccess.DBConnector.getConnector;
+        import static DataAccess.DBConnector.getConnector;
 
-public class CoachDA implements DataAccess
+public class  GameDA implements DataAccess
 {
     public void save(String username , String password) throws Exception
     {
@@ -21,7 +23,7 @@ public class CoachDA implements DataAccess
             {
                 conn = getConnector();
                 Statement st = conn.createStatement();
-                st.executeUpdate("INSERT INTO "+Table.coaches+ "(username , password) " +
+                st.executeUpdate("INSERT INTO "+ Table.coaches+ "(username , password) " +
                         "VALUES (@username,@password)");
             }
             catch (SQLException e)
@@ -106,3 +108,4 @@ public class CoachDA implements DataAccess
     }
 
 }
+

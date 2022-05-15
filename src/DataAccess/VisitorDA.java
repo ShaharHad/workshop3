@@ -1,5 +1,7 @@
 package DataAccess;
 
+import Domain.Table;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,33 +34,15 @@ public class VisitorDA implements DataAccess {
 
     }
 
-    @Override
     public void save(String username) {
 
     }
-    @Override
-    public void update(){ }
+    public void update(String username, String password)throws Exception {
+        if (username==null ) throw new Exception("username name is null");
+    }
 
-    @Override
     public void delete(String username)throws Exception {
         if (username==null ) throw new Exception("username name is null");
-        else{
-            Connection con = null;
-            String query = "";
-            ResultSet rs;
-            try {
-                con = getConnector();
-                Statement stmt = con.createStatement();
-                query = "DELETE from dbo.DB WHERE USER_NAME = @username";
-
-                stmt.executeQuery(query);
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
-        }
-
 
     }
 

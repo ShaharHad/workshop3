@@ -11,9 +11,9 @@ public class Team
 
     public Team(Owner owner) throws Exception
     {
-        this.players = new ArrayList<>();
-        this.coaches = new ArrayList<>();
-        this.managers = new ArrayList<>();
+//        this.players = new ArrayList<>();
+//        this.coaches = new ArrayList<>();
+//        this.managers = new ArrayList<>();
         if (owner == null) { throw new Exception("owner is null!"); }
         this.owners.add(owner);
     }
