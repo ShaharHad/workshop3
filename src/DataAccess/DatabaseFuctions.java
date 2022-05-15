@@ -7,9 +7,10 @@ public class DatabaseFuctions
     public static Connection getConnector()
     {
         String url = "";
+        Connection conn;
         try
         {
-            Connection conn = DriverManager.getConnection(url, "root", "root");
+            conn = DriverManager.getConnection(url, "root", "root");
             return conn;
         }
         catch (SQLException e)
