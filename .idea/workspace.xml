@@ -5,7 +5,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="342c5fd9-e6c3-4079-8db1-ff7bcf13f887" name="Default Changelist" comment="" />
+    <list default="true" id="342c5fd9-e6c3-4079-8db1-ff7bcf13f887" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/DataAccess/CoachDA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataAccess/DataAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataAccess/VisitorDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataAccess/DatabaseFuctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataAccess/DatabaseFuctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Team.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Visitor.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +24,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -32,5 +46,27 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="383" y="145" width="540" height="337" key="MultipleFileMergeDialog" timestamp="1652611808473">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="383" y="145" width="540" height="337" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1652611808473" />
+    <state x="163" y="0" key="SettingsEditor" timestamp="1652611961812">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1652611961812" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1652611327835">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1652611327835" />
+    <state x="426" y="16" key="git4idea.branch.GitSmartOperationDialog" timestamp="1652611270098">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="426" y="16" key="git4idea.branch.GitSmartOperationDialog/0.0.1366.728@0.0.1366.728" timestamp="1652611270098" />
   </component>
 </project>
