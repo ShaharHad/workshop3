@@ -4,9 +4,9 @@ import java.sql.*;
 
 class DBConnector
 {
-    public static final String URL = "jdbc:mysql://localhost:3306/";
+    public static final String URL = "jdbc:mysql://localhost:3306/javabase";
     public static final String USER = "root";
-    public static final String PASSWORD = "root";
+    public static final String PASSWORD = "MySQLroot369";
 
     private static final DBConnector instance = new DBConnector();
 
@@ -17,15 +17,12 @@ class DBConnector
 
     public static Connection getConnector()
     {
-        String url = "";
         try
         {
-            return DriverManager.getConnection(url, "root", "root");
+            System.out.println("database connected!");
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         }
-        catch (SQLException e) { throw new RuntimeException(); }
+        catch (SQLException e) { throw new RuntimeException("Error connecting to the database", e); }
     }
-
-
-
 
 }

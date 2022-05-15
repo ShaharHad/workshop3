@@ -1,5 +1,5 @@
 package Domain;
-import DataAccess.DatabaseFuctions;
+//import DataAccess.DatabaseFuctions;
 
 public class Owner extends Member
 {
@@ -10,19 +10,19 @@ public class Owner extends Member
 
     public Status assignManager(String username)
     {
-        DatabaseFuctions.update("Manager");
+//        DatabaseFuctions.update("Manager");
         return Status.Success;
     }
 
     public Status assignCoach(String username)
     {
-        DatabaseFuctions.update("Coach");
+//        DatabaseFuctions.update("Coach");
         return Status.Success;
     }
 
     public Status assignPlayer(String username)
     {
-        DatabaseFuctions.update("Player");
+//        DatabaseFuctions.update("Player");
         return Status.Success;
     }
 }
