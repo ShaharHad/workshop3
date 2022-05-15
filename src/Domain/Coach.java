@@ -5,8 +5,8 @@ public class Coach extends Member
     String role;
     String training;
 
-    public Coach(String username, String password, String name, String role, String training)
-    {
+    public Coach(String username, String role, String training) {
+        //need to get password ,name from db
         super(username, password, name);
         this.role = role;
         this.training = training;
