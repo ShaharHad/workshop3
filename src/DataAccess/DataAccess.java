@@ -1,12 +1,14 @@
 package DataAccess;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import Domain.Member;
+
+import java.util.Map;
 
 public interface DataAccess<T>
 {
-    void save(String username);
-    void update();
-    void delete();
+    void save(T t) throws Exception;
+    void update(T t, Map<String, String> newParams) throws Exception;
+    void delete(T t) throws Exception;
+    Member get(String userName) throws Exception;
+
 }
