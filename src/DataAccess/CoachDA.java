@@ -1,6 +1,7 @@
 package DataAccess;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,13 +26,20 @@ public class CoachDA implements DataAccess
 
     }
 
+
+
     public void update()
     {
 
     }
 
-    public void delete()
-    {
+    @Override
+    public void delete(String username) {
 
+    }
+
+    @Override
+    public ResultSet getRecord(String username) {
+        return null;
     }
 }

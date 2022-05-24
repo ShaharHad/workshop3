@@ -29,6 +29,25 @@ public class OwnerDA implements DataAccess
 
     }
 
+    public void assignPlayer(String username, String role)
+    {
+        Connection conn;
+        try
+        {
+            conn = getConnector();
+            Statement st = conn.createStatement();
+            st.executeUpdate("INSERT INTO javabase.players (userName, teamName, birthDate, role)" +
+                    "VALUES ("+username + ", 'Barcelona', '2000-01-01.', 'defense')");
+            update(username, role, conn);
+        }
+        catch (SQLException e)
+        {
+            System.out.println("issue in assignPlayer function");
+            System.out.println(e);
+        }
+
+    }
+
     public ResultSet getRecord(String username)
     {
         if (username == null)
@@ -42,6 +61,7 @@ public class OwnerDA implements DataAccess
             String query = "SELECT userName, password, name FROM members";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            System.out.println(rs);
             return rs;
         }
         catch (SQLException e)
@@ -83,12 +103,31 @@ public class OwnerDA implements DataAccess
     }
 
 
-    public Status update(String username)
+    public void update(String username, String role, Connection conn)
     {
-        if (username == null)
+        String query = "UPDATE javabase.members SET role=" + role + " WHERE userName=" + username;
+        try
         {
-            return null;
+            conn = getConnector();
+            Statement st = conn.createStatement();
+            st.executeUpdate(query);
         }
+        catch (SQLException e)
+        {
+            System.out.println("issue in assignPlayer function");
+
+            System.out.println(e);
+        }
+    }
+
+    public void delete()
+    {
+
+    }
+
+
+    public void update(String username)
+    {
         Connection conn;
         String table_name = "owner";
         String column_name = "";
@@ -104,11 +143,5 @@ public class OwnerDA implements DataAccess
         {
             System.out.println(e);
         }
-        return Status.Failure;
-    }
-
-    public void delete()
-    {
-
     }
 }

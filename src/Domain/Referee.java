@@ -36,10 +36,10 @@ public class Referee extends Member
         return  Status.Failure;
     }
 
-    public Status updateEventLog(){
-        return Status.Success;
-    }
-    public Status setGameSocore(){
-        return Status.Success;
-    }
+//    public Status updateEventLog(){
+//        return Status.Success;
+//    }
+//    public Status setGameSocore(){
+//        return Status.Success;
+//    }
 }
