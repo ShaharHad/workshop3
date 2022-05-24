@@ -1,11 +1,10 @@
 package DataAccess;
 import java.sql.*;
-import java.sql.DriverManager;
 
 
 class DBConnector
 {
-    public static final String URL = "jdbc:mysql://127.0.0.1:3306/javabase";
+    public static final String URL = "jdbc:mysql://localhost:3306/javabase";
     public static final String USER = "root";
     public static final String PASSWORD = "MySQLroot369";
 
@@ -20,11 +19,10 @@ class DBConnector
     {
         try
         {
-            System.out.println("database connected!");
-            Connection conn =  DriverManager.getConnection(URL, USER, PASSWORD);
-            return conn;
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         }
         catch (SQLException e) { throw new RuntimeException("Error connecting to the database", e); }
     }
-
 }
+
+
