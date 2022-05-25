@@ -1,28 +1,38 @@
 package Domain;
-//import DataAccess.DatabaseFuctions;
+import DataAccess.OwnerDA;
+import jdk.jfr.Event;
 
-public class Owner extends Member
-{
-    public Owner(String username, String password, String name)
-    {
-        super(username, password, name);
+import java.sql.SQLException;
+
+public class Owner extends Member {
+    String teamName;
+    OwnerDA ODA = OwnerDA.getInstance();
+
+    public Owner(String username, String password, String name, String teamName) {
+        super(username, password, name, "owner");
+        this.teamName = teamName;
     }
 
-    public Status assignManager(String username)
-    {
-//        DatabaseFuctions.update("Manager");
-        return Status.Success;
+    public String getTeamName() {
+        return this.teamName;
     }
 
-    public Status assignCoach(String username)
-    {
-//        DatabaseFuctions.update("Coach");
-        return Status.Success;
-    }
-
-    public Status assignPlayer(String username)
-    {
-//        DatabaseFuctions.update("Player");
-        return Status.Success;
+    public boolean login(String username, String password) throws Exception {
+        if (username == null || password == null) {
+            throw new Exception("one of the parameters is null");
+        }
+        Member member = ODA.get(username);
+        if (member == null) {
+            throw new Exception("user not exist");
+        } else
+        {
+            if (member.getPassword().equals(password))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
+
+
