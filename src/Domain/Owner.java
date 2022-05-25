@@ -4,121 +4,34 @@ import jdk.jfr.Event;
 
 import java.sql.SQLException;
 
-public class Owner extends Member
-{
+public class Owner extends Member {
+    String teamName;
     OwnerDA ODA = OwnerDA.getInstance();
-    public Owner(String username, String password, String name)
-    {
-        super(username, password, name);
+
+    public Owner(String username, String password, String name, String teamName) {
+        super(username, password, name, "owner");
+        this.teamName = teamName;
     }
 
-    public Status assignManager(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        try
-        {
-            ODA.save(username);
-            ODA.update(username);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-
-        return Status.Success;
+    public String getTeamName() {
+        return this.teamName;
     }
 
-    public Status assignPlayer(String username)
-    {
-        if (username == null)
-        {
-            return null;
+    public boolean login(String username, String password) throws Exception {
+        if (username == null || password == null) {
+            throw new Exception("one of the parameters is null");
         }
-        try
-        {
-            ODA.update(username);
+        Member member = ODA.get(username);
+        if (member == null) {
+            throw new Exception("user not exist");
+        } else {
+            if (member.getPassword().equals(password))
+            {
+                return true;
+            }
+            return false;
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        return Status.Success;
     }
-
-    public Status assignCoach(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        try
-        {
-            ODA.update(username);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        return Status.Success;
-    }
-
-    public Status assignOwner(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        ODA.update(username);
-        return Status.Success;
-    }
-
-
-
-
-    public Status removeManager(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        ODA.update(username);
-        return Status.Success;
-    }
-
-    public Status removePlayer(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        ODA.update(username);
-        return Status.Success;
-    }
-
-    public Status removeCoach(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        ODA.update(username);
-        return Status.Success;
-    }
-
-    public Status removeOwner(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        ODA.update(username);
-        return Status.Success;
-    }
-
 }
+
+
