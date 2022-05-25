@@ -26,11 +26,7 @@ public class Owner extends Member {
             throw new Exception("user not exist");
         } else
         {
-            if (member.getPassword().equals(password))
-            {
-                return true;
-            }
-            return false;
+            return member.getPassword().equals(password);
         }
     }
 }
