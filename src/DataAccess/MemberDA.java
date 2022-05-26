@@ -4,6 +4,7 @@ package DataAccess;
 import Domain.Member;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
@@ -51,7 +52,9 @@ public class MemberDA implements DataAccess<Member>
         if (member == null || newParams.isEmpty())
             throw new Exception("one of the parameters is null");
         String userName = member.getUserName();
-        Member memberDB = get(userName);
+        Map<String, String> keyParams = new HashMap<>();
+        keyParams.put("userName", userName);
+        Member memberDB = get(keyParams);
         if (memberDB == null) { System.out.println("member doesn't exist"); }
         Connection conn;
         try
@@ -77,7 +80,7 @@ public class MemberDA implements DataAccess<Member>
     public void delete(Member member) throws Exception
     {
         if (member == null)
-            throw new Exception("userName is null");
+            throw new Exception("member is null");
         String userNameRS = member.getUserName();
         String roleRS = member.getClass().getSimpleName(), table;
         Connection conn;
@@ -121,10 +124,15 @@ public class MemberDA implements DataAccess<Member>
     }
 
     @Override
-    public Member get(String userName)
+    public Member get(Map<String, String> keyParams)
     {
-        if (userName == null)
+        if (keyParams.isEmpty())
             return null;
+        for (String val : keyParams.values())
+        {
+            if (val == null)
+                return null;
+        }
         ResultSet rs;
         Connection conn;
         Member member = null;
@@ -134,7 +142,7 @@ public class MemberDA implements DataAccess<Member>
         try
         {
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, userName);
+            preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
 
             while(rs.next())
