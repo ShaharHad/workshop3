@@ -1,6 +1,7 @@
 package DataAccess;
 
 import Domain.Member;
+import Domain.Owner;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,18 +21,23 @@ class MemberDATest
 {
     Member memberLeah;
     Member memberMaxim;
+    Member memberFan;
     MemberDA m = MemberDA.getInstance();
     Map<String, String> keyParamsLeah;
     Map<String, String> keyParamsMaxim;
+    Map<String, String> keyParamsFan;
 
     @BeforeAll
     public void beforeAll()
     {
         memberLeah = new MemberData("leahma", "12345Q", "leah", "referee");
         memberMaxim = new MemberData("maxi2", "", "maxim", "coach");
+        memberFan = new MemberData("sha3", "sha3", "arnon", "fan");
         keyParamsLeah = new HashMap<>();
         keyParamsMaxim = new HashMap<>();
+        keyParamsFan = new HashMap<>();
         keyParamsLeah.put("userName", memberLeah.getUserName());
+        keyParamsFan.put("userName", memberFan.getUserName());
         keyParamsMaxim.put("userName", memberMaxim.getUserName());
     }
 
@@ -39,6 +45,7 @@ class MemberDATest
     {
         return Stream.of(
                 Arguments.of(memberLeah, keyParamsLeah),
+                Arguments.of(memberFan, keyParamsFan),
                 Arguments.of(memberMaxim, keyParamsMaxim)
         );
     }
@@ -53,6 +60,22 @@ class MemberDATest
         try { member = m.get(keyParamsT); }
         catch (Exception e) { throw new RuntimeException(e); }
         assertNotNull(member, "user wasn't saved correctly");
+    }
+
+    private Stream<Arguments> noMemberParams()
+    {
+        return Stream.of(
+                Arguments.of(null, keyParamsMaxim),
+                Arguments.of(null, keyParamsLeah)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noMemberParams"})
+    void noMemberSaveTest(Member memberT)
+    {
+        try { m.save(memberT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "member is null"); }
     }
 
 
@@ -95,4 +118,5 @@ class MemberDATest
             throw new RuntimeException(e);
         }
     }
+
 }

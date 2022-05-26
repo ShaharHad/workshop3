@@ -28,28 +28,22 @@ public class OwnerDA implements DataAccess<Owner>
         String role = owner.getRole();
         String name = owner.getName();
         String teamName = owner.getTeamName();
-        try
-        {
-            conn = getConnector();
-            String query = ("INSERT INTO "+ tableNames.members + "(userName ,password, role, name) VALUES (?,?,?,?)");
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, userName);
-            preparedStmt.setString(2, password);
-            preparedStmt.setString(3, role);
-            preparedStmt.setString(4, name);
-            preparedStmt.execute();
+        try { conn = getConnector(); }
+        catch(RuntimeException e) {throw new Exception(e.getMessage()); }
+        String query = ("INSERT INTO "+ tableNames.members + "(userName ,password, role, name) VALUES (?,?,?,?)");
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, userName);
+        preparedStmt.setString(2, password);
+        preparedStmt.setString(3, role);
+        preparedStmt.setString(4, name);
+        preparedStmt.execute();
 
-            String query2 = ("INSERT INTO "+ tableNames.owners + "(userName ,teamName) VALUES (?,?)");
-            PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-            preparedStmt2.setString(1, userName);
-            preparedStmt2.setString(2, teamName);
-            preparedStmt2.execute();
-            conn.close();
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        String query2 = ("INSERT INTO "+ tableNames.owners + "(userName ,teamName) VALUES (?,?)");
+        PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+        preparedStmt2.setString(1, userName);
+        preparedStmt2.setString(2, teamName);
+        preparedStmt2.execute();
+        conn.close();
     }
 
     @Override
@@ -61,61 +55,56 @@ public class OwnerDA implements DataAccess<Owner>
         Map<String, String> keyParams = new HashMap<>();
         keyParams.put("userName", userName);
         Member memberDB = get(keyParams);
-        if (memberDB == null) { System.out.println("member doesn't exist"); }
+        if (memberDB == null)
+            throw new Exception("member doesn't exist");
         Connection conn;
-        try
+        try { conn = getConnector(); }
+        catch(RuntimeException e) {throw new Exception(e.getMessage()); }
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableNames.members);
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+        List<String> membersColNames = new ArrayList<>();
+
+        // The column count starts from 1
+        for (int i = 1; i <= columnCount; i++)
         {
-            conn = getConnector();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableNames.members);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            List<String> membersColNames = new ArrayList<>();
-
-            // The column count starts from 1
-            for (int i = 1; i <= columnCount; i++)
-            {
-                String name = rsmd.getColumnName(i);
-                membersColNames.add(name);
-            }
-
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM " + tableNames.owners);
-            rsmd = rs.getMetaData();
-            columnCount = rsmd.getColumnCount();
-            List<String> ownersColNames = new ArrayList<>();
-
-            // The column count starts from 1
-            for (int i = 1; i <= columnCount; i++)
-            {
-                String name = rsmd.getColumnName(i);
-                ownersColNames.add(name);
-            }
-
-            for (String key : newParams.keySet())
-            {
-                if (membersColNames.contains(key))
-                {
-                    String query = "UPDATE " + tableNames.members + " SET " + key + " = ? WHERE userName = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(2, memberDB.getUserName());
-                    preparedStmt.setString(1, newParams.get(key));
-                    preparedStmt.execute();
-                }
-                else if (ownersColNames.contains(key))
-                {
-                    String query = "UPDATE " + tableNames.owners + " SET " + key + " = ? WHERE userName = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(2, memberDB.getUserName());
-                    preparedStmt.setString(1, newParams.get(key));
-                    preparedStmt.execute();
-                }
-                conn.close();
-            }
+            String name = rsmd.getColumnName(i);
+            membersColNames.add(name);
         }
-        catch (SQLException e)
+
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM " + tableNames.owners);
+        rsmd = rs.getMetaData();
+        columnCount = rsmd.getColumnCount();
+        List<String> ownersColNames = new ArrayList<>();
+
+        // The column count starts from 1
+        for (int i = 1; i <= columnCount; i++)
         {
-            System.out.println(e.getMessage());
+            String name = rsmd.getColumnName(i);
+            ownersColNames.add(name);
+        }
+
+        for (String key : newParams.keySet())
+        {
+            if (membersColNames.contains(key))
+            {
+                String query = "UPDATE " + tableNames.members + " SET " + key + " = ? WHERE userName = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(2, memberDB.getUserName());
+                preparedStmt.setString(1, newParams.get(key));
+                preparedStmt.execute();
+            }
+            else if (ownersColNames.contains(key))
+            {
+                String query = "UPDATE " + tableNames.owners + " SET " + key + " = ? WHERE userName = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(2, memberDB.getUserName());
+                preparedStmt.setString(1, newParams.get(key));
+                preparedStmt.execute();
+            }
+            conn.close();
         }
     }
 

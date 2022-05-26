@@ -9,12 +9,14 @@ public class Team
     ArrayList<Manager> managers;
     ArrayList<Owner> owners;
     String teamName;
+    String field;
 
-    public Team(Owner owner, String teamName) throws Exception
+    public Team(Owner owner, String teamName, String field) throws Exception
     {
-        if (owner == null) { throw new Exception("owner is null!"); }
-        if (teamName == null)  { throw new Exception("teamName is null!"); }
+        if (owner == null || teamName == null || field == null)
+            throw new Exception("one of the params is null!");
         this.teamName = teamName;
+        this.field = field;
         this.owners = new ArrayList<>();
         this.owners.add(owner);
         this.players = new ArrayList<>();

@@ -28,22 +28,17 @@ public class MemberDA implements DataAccess<Member>
         String password = member.getPassword();
         String role = member.getRole();
         String name =member.getName();
-        try
-        {
-            conn = getConnector();
-            String query = ("INSERT INTO "+ tableNames.members+ "(userName ,password, role, name) VALUES (?,?,?,?)");
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, userName);
-            preparedStmt.setString(2, password);
-            preparedStmt.setString(3, role);
-            preparedStmt.setString(4, name);
-            preparedStmt.execute();
-            conn.close();
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        try { conn = getConnector(); }
+        catch(RuntimeException e) {throw new Exception(e.getMessage()); }
+        String query = ("INSERT INTO "+ tableNames.members+ "(userName ,password, role, name) VALUES (?,?,?,?)");
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, userName);
+        preparedStmt.setString(2, password);
+        preparedStmt.setString(3, role);
+        preparedStmt.setString(4, name);
+        preparedStmt.execute();
+        conn.close();
+
     }
 
     @Override
@@ -55,7 +50,8 @@ public class MemberDA implements DataAccess<Member>
         Map<String, String> keyParams = new HashMap<>();
         keyParams.put("userName", userName);
         Member memberDB = get(keyParams);
-        if (memberDB == null) { System.out.println("member doesn't exist"); }
+        if (memberDB == null)
+            throw new Exception("member doesn't exist");
         Connection conn;
         try
         {
@@ -82,7 +78,7 @@ public class MemberDA implements DataAccess<Member>
         if (member == null)
             throw new Exception("member is null");
         String userNameRS = member.getUserName();
-        String roleRS = member.getClass().getSimpleName(), table;
+        String roleRS = member.getRole(), table;
         Connection conn;
         conn = getConnector();
         try
@@ -96,6 +92,7 @@ public class MemberDA implements DataAccess<Member>
                 preparedStmt.setString(1, userNameRS);
                 preparedStmt.execute();
             }
+
             //delete from members table
             String query2 = "DELETE FROM " + tableNames.members + " WHERE userName = ?";
             PreparedStatement preparedStmt2 = conn.prepareStatement(query2);

@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RefereeDATest
 {
@@ -22,8 +23,10 @@ class RefereeDATest
     RefereeDA r = RefereeDA.getInstance();
     Map<String, String> keyParamsLeah;
     Map<String, String> keyParamsMaxim;
+    Map<String, String> keyParamsEmpty;
     Map<String, String> updateParamsLeah;
     Map<String, String> updateParamsMaxim;
+    Map<String, String> updateParamsEmpty;
 
     @BeforeAll
     public void beforeAll()
@@ -34,14 +37,65 @@ class RefereeDATest
         keyParamsMaxim = new HashMap<>();
         keyParamsLeah.put("userName", refereeLeah.getUserName());
         keyParamsMaxim.put("userName", refereeMaxim.getUserName());
+        keyParamsEmpty = new HashMap<>();
         updateParamsLeah = new HashMap<>();
         updateParamsMaxim = new HashMap<>();
+        updateParamsEmpty = new HashMap<>();
         updateParamsLeah.put("name", "leah");
         updateParamsLeah.put("training", "Grade 6");
         updateParamsMaxim.put("training", "Grade 1");
     }
 
-    private Stream<Arguments> paramsProvider()
+    private Stream<Arguments> noRefereeParams()
+    {
+        return Stream.of(
+                Arguments.of(null, keyParamsEmpty),
+                Arguments.of(null, keyParamsEmpty)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noRefereeParams"})
+    void noRefereeSaveTest(Referee refereeT)
+    {
+        try { r.save(refereeT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "member is null"); }
+    }
+
+    private Stream<Arguments> noRefereeUpdateParams()
+    {
+        return Stream.of(
+                Arguments.of(null, updateParamsLeah),
+                Arguments.of(refereeMaxim, updateParamsEmpty)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noRefereeUpdateParams"})
+    void noRefereeUpdateTest(Referee refereeT, Map<String, String> updateParamsT)
+    {
+        try { r.update(refereeT, updateParamsT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "one of the parameters is null"); }
+    }
+
+    private Stream<Arguments> noMemberParams()
+    {
+        return Stream.of(
+                Arguments.of(refereeLeah, updateParamsLeah),
+                Arguments.of(refereeMaxim, updateParamsMaxim)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noMemberParams"})
+    void noMemberUpdateTest(Referee refereeT, Map<String, String> updateParamsT)
+    {
+        try { r.update(refereeT, updateParamsT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "member doesn't exist"); }
+    }
+
+
+    private Stream<Arguments> saveSuccessParams()
     {
         return Stream.of(
                 Arguments.of(refereeLeah, keyParamsLeah),
@@ -50,7 +104,7 @@ class RefereeDATest
     }
 
     @ParameterizedTest
-    @MethodSource({"paramsProvider"})
+    @MethodSource({"saveSuccessParams"})
     void testSaveSuccess(Referee refereeT, Map<String, String> keyParamsT)
     {
         try { r.save(refereeT); } catch (Exception e) { System.out.println("problem in save method"); }
@@ -60,7 +114,8 @@ class RefereeDATest
         assertNotNull(owner, "user wasn't saved correctly");
     }
 
-    private Stream<Arguments> paramsUpdateProvider()
+
+    private Stream<Arguments> updateSuccessParams()
     {
         return Stream.of(
                 Arguments.of(refereeLeah, keyParamsLeah, updateParamsLeah),
@@ -69,7 +124,7 @@ class RefereeDATest
     }
 
     @ParameterizedTest
-    @MethodSource({"paramsUpdateProvider"})
+    @MethodSource({"updateSuccessParams"})
     void testUpdateSuccess(Referee refereeT, Map<String, String> keyParamsT, Map<String, String> updateParams)
     {
         try {
@@ -87,7 +142,40 @@ class RefereeDATest
     }
 
     @ParameterizedTest
-    @MethodSource("paramsProvider")
+    @MethodSource("saveSuccessParams")
+    void testGet(Referee refereeT, Map<String, String> keyParamsT)
+    {
+        try { r.save(refereeT); } catch (Exception e) { System.out.println("problem in save method"); }
+        Referee referee = r.get(keyParamsT);
+        assertEquals(referee.getUserName(), refereeT.getUserName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("saveSuccessParams")
+    void testGetFail(Referee refereeT, Map<String, String> keyParamsT)
+    {
+        Referee referee = r.get(keyParamsT);
+        assertNull(referee);
+    }
+
+    @ParameterizedTest
+    @MethodSource("noRefereeParams")
+    void testDeleteNoSuccess(Referee refereeT,  Map<String, String> keyParamsT)
+    {
+        try { r.delete(refereeT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "referee is null"); }
+    }
+
+    @ParameterizedTest
+    @MethodSource("saveSuccessParams")
+    void testDeleteNoTable(Referee refereeT,  Map<String, String> keyParamsT)
+    {
+        try { r.delete(refereeT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "role is null"); }
+    }
+
+    @ParameterizedTest
+    @MethodSource("saveSuccessParams")
     void testDeleteSuccess(Referee refereeT,  Map<String, String> keyParamsT)
     {
         try { r.delete(refereeT); } catch (Exception e) { throw new RuntimeException(e); }
@@ -102,12 +190,6 @@ class RefereeDATest
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("paramsProvider")
-    void testGet(Referee refereeT, Map<String, String> keyParamsT)
-    {
-        Referee referee = r.get(keyParamsT);
-        assertEquals(referee.getUserName(), refereeT.getUserName());
-    }
+
 
 }
