@@ -35,5 +35,4 @@ public class Fan extends Member {
         }
         return this.getPassword().equals(password);
     }
-
 }
