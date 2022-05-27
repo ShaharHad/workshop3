@@ -45,5 +45,14 @@ public abstract class Member
         return role;
     }
 
+    public String show(boolean success, String username, String role)
+    {
+        if(success)
+        {
+            return username + " success to login as " + role;
+        }
+        return "Username or Password is incorrect";
+    }
+
 
 }

@@ -45,7 +45,7 @@ public class Owner extends Member
             throw new Exception("One of the parameters is null");
         }
         OwnerDA oda = OwnerDA.getInstance();
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         Member member = oda.get(map);
         if (member == null) {
@@ -56,18 +56,11 @@ public class Owner extends Member
         }
     }
 
-    public String show(boolean success, String username)
-    {
-        if(success)
-        {
-            return username + " success to login as owner";
-        }
-        return "Username or Password is incorrect";
-    }
 
-    static Owner getOwner(String username)
+
+    static Owner getOwnerFromDB(String username)
     {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         OwnerDA oda = OwnerDA.getInstance();
         return oda.get(map);
