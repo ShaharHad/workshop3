@@ -12,11 +12,13 @@ public class Player extends Member
 {
     Date birthDate;
     String role;
+    String teamName;
 
-    public Player(String username, String password, String name, Date birthDate, String roleInTeam) {
+    public Player(String username, String password, String name, Date birthDate, String roleInTeam, String teamName) {
         super(username, password, name, "player");
         this.birthDate = birthDate;
         this.role = roleInTeam;
+        this.teamName = teamName;
     }
 
 

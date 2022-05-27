@@ -73,12 +73,12 @@ public class PlayerDA implements DataAccess<Player>{
             while(rs.next())
             {
                 String userNameRS = rs.getString("userName");
-                String teamNameRS = rs.getString("teamName"); //???? need?
+                String teamNameRS = rs.getString("teamName");
 
                 Date birthDateRS = rs.getDate("birthDate");
                 String roleRS = rs.getString("role");
 
-                player = new Player(userNameRS, member.getPassword(), member.getName(), birthDateRS, roleRS);
+                player = new Player(userNameRS, member.getPassword(), member.getName(), birthDateRS, roleRS, teamNameRS);
             }
             preparedStmt.close();
             conn.close();
