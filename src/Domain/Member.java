@@ -23,6 +23,9 @@ public abstract class Member
         this.role = "fan";
     }
 
+    protected Member() {
+    }
+
     public String getUserName()
     {
         return this.userName;

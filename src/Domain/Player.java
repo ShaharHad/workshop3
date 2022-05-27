@@ -8,7 +8,7 @@ public class Player extends Member
     Date birthDate;
     String role;
 
-    public Player(String username, String password, String name, Date birthDate, String role) {
+    public Player(String username, String password, String name,String role, Date birthDate) {
         super(username, password, name);
         this.birthDate = birthDate;
         this.role = role;
