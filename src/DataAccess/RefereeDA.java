@@ -1,33 +1,36 @@
 package DataAccess;
 
-
 import Domain.Member;
-import Domain.Owner;
+import Domain.Referee;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
 
-public class OwnerDA implements DataAccess<Owner>
+public class RefereeDA implements DataAccess<Referee>
 {
-    private static final OwnerDA instance = new OwnerDA();
+    private static final RefereeDA instance = new RefereeDA();
 
     //private constructor to avoid client applications to use constructor
-    public static OwnerDA getInstance() { return instance; }
-    private OwnerDA() {}
+    public static RefereeDA getInstance() { return instance; }
+    private RefereeDA() {}
 
     @Override
-    public void save(Owner owner) throws Exception
+    public void save(Referee referee) throws Exception
     {
-        if (owner == null)
+        if (referee == null)
             throw new Exception("member is null");
         Connection conn;
-        String userName = owner.getUserName();
-        String password = owner.getPassword();
-        String role = owner.getRole();
-        String name = owner.getName();
-        String teamName = owner.getTeamName();
+        String userName = referee.getUserName();
+        String password = referee.getPassword();
+        String role = referee.getRole();
+        String name = referee.getName();
+        String training = referee.getTraining();
+
         try { conn = getConnector(); }
         catch(RuntimeException e) {throw new Exception(e.getMessage()); }
         String query = ("INSERT INTO "+ tableNames.members + "(userName ,password, role, name) VALUES (?,?,?,?)");
@@ -38,20 +41,21 @@ public class OwnerDA implements DataAccess<Owner>
         preparedStmt.setString(4, name);
         preparedStmt.execute();
 
-        String query2 = ("INSERT INTO "+ tableNames.owners + "(userName ,teamName) VALUES (?,?)");
+        String query2 = ("INSERT INTO "+ tableNames.referees + "(userName ,training, isMainReferee) VALUES (?,?, ?)");
         PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
         preparedStmt2.setString(1, userName);
-        preparedStmt2.setString(2, teamName);
+        preparedStmt2.setString(2, training);
+        preparedStmt2.setBoolean(3, referee.isMainReferee());
         preparedStmt2.execute();
         conn.close();
     }
 
     @Override
-    public void update(Owner owner, Map<String, String> newParams) throws Exception
+    public void update(Referee referee, Map<String, String> newParams) throws Exception
     {
-        if (owner == null || newParams.isEmpty())
+        if (referee == null || newParams.isEmpty())
             throw new Exception("one of the parameters is null");
-        String userName = owner.getUserName();
+        String userName = referee.getUserName();
         Map<String, String> keyParams = new HashMap<>();
         keyParams.put("userName", userName);
         Member memberDB = get(keyParams);
@@ -74,7 +78,7 @@ public class OwnerDA implements DataAccess<Owner>
         }
 
         stmt = conn.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM " + tableNames.owners);
+        rs = stmt.executeQuery("SELECT * FROM " + tableNames.referees);
         rsmd = rs.getMetaData();
         columnCount = rsmd.getColumnCount();
         List<String> ownersColNames = new ArrayList<>();
@@ -98,68 +102,59 @@ public class OwnerDA implements DataAccess<Owner>
             }
             else if (ownersColNames.contains(key))
             {
-                String query = "UPDATE " + tableNames.owners + " SET " + key + " = ? WHERE userName = ?";
+                String query = "UPDATE " + tableNames.referees + " SET " + key + " = ? WHERE userName = ?";
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setString(2, memberDB.getUserName());
                 preparedStmt.setString(1, newParams.get(key));
                 preparedStmt.execute();
             }
-            conn.close();
         }
+        conn.close();
     }
 
     @Override
-    public void delete(Owner owner) throws Exception
+    public void delete(Referee referee) throws Exception
     {
-        if (owner == null)
-            throw new Exception("owner is null");
-        String userNameRS = owner.getUserName();
-        String roleRS = owner.getClass().getSimpleName().toLowerCase(), table;
+        if (referee == null)
+            throw new Exception("referee is null");
+        String userNameRS = referee.getUserName();
+        String roleRS = referee.getClass().getSimpleName().toLowerCase(), table;
         Connection conn;
-        conn = getConnector();
-        try
+        try { conn = getConnector(); }
+        catch(RuntimeException e) {throw new Exception(e.getMessage()); }
+        table = getTableFromRole(roleRS);
+        if (table != null)
         {
-            table = getTableFromRole(roleRS);
-            if (table != null)
-            {
-                //delete from role table
-                String query = "DELETE FROM " + table + " WHERE userName = ?";
-                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setString(1, userNameRS);
-                preparedStmt.execute();
-            }
-            //delete from members table
-            String query2 = "DELETE FROM " + tableNames.members + " WHERE userName = ?";
-            PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-            preparedStmt2.setString(1, userNameRS);
-            preparedStmt2.execute();
-            conn.close();
+            //delete from role table
+            String query = "DELETE FROM " + table + " WHERE userName = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, userNameRS);
+            preparedStmt.execute();
         }
-        catch (Exception e) { System.out.println("problem in delete function"); }
+        else { throw new Exception("role is null"); }
+        //delete from members table
+        String query2 = "DELETE FROM " + tableNames.members + " WHERE userName = ?";
+        PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+        preparedStmt2.setString(1, userNameRS);
+        preparedStmt2.execute();
+        conn.close();
     }
 
-    private String getTableFromRole(String roleRS) throws Exception
+    private String getTableFromRole(String roleRS)
     {
-        if (roleRS == null)
-            throw new Exception("role is null");
-        else
+        for (tableNames table : tableNames.values())
         {
-            for (tableNames table : tableNames.values())
+            if ((table.name().equals(roleRS + "s")) || table.name().equals(roleRS + "es"))
             {
-                if ((table.name().equals(roleRS + "s")) || table.name().equals(roleRS + "es"))
-                {
-                    return table.name();
-                }
+                return table.name();
             }
         }
         return null;
     }
 
     @Override
-    public Owner get(Map<String, String> keyParams)
+    public Referee get(Map<String, String> keyParams)
     {
-        if (keyParams.isEmpty())
-            return null;
         for (String val : keyParams.values())
         {
             if (val == null)
@@ -168,13 +163,12 @@ public class OwnerDA implements DataAccess<Owner>
         ResultSet rs;
         Connection conn;
         Member member = null;
-        Owner owner = null;
-        conn = getConnector();
-        String query = "select * from javabase." + tableNames.members + " where userName = ?";
-        PreparedStatement preparedStmt;
+        Referee referee = null;
         try
         {
-            preparedStmt = conn.prepareStatement(query);
+            conn = getConnector();
+            String query = "select * from javabase." + tableNames.members + " where userName = ?";
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
 
@@ -188,7 +182,7 @@ public class OwnerDA implements DataAccess<Owner>
             }
             preparedStmt.close();
 
-            String query2 = "select * from javabase." + tableNames.owners + " where userName = ?";
+            String query2 = "select * from javabase." + tableNames.referees + " where userName = ?";
             preparedStmt = conn.prepareStatement(query2);
             preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
@@ -196,8 +190,10 @@ public class OwnerDA implements DataAccess<Owner>
             while(rs.next())
             {
                 String userNameRS = rs.getString("userName");
-                String teamNameRS = rs.getString("teamName");
-                owner = new Owner(userNameRS, member.getPassword(), member.getName(), teamNameRS);
+                String trainingRS = rs.getString("training");
+                boolean isMainRefereeRS = rs.getBoolean("isMainReferee");
+                referee = new Referee(userNameRS, member.getPassword(), member.getName(), trainingRS);
+                referee.setMainReferee(isMainRefereeRS);
             }
             preparedStmt.close();
             conn.close();
@@ -206,6 +202,6 @@ public class OwnerDA implements DataAccess<Owner>
             return null;
         }
 
-        return owner;
+        return referee;
     }
 }

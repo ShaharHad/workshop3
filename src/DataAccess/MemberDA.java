@@ -4,6 +4,7 @@ package DataAccess;
 import Domain.Member;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
@@ -27,22 +28,17 @@ public class MemberDA implements DataAccess<Member>
         String password = member.getPassword();
         String role = member.getRole();
         String name =member.getName();
-        try
-        {
-            conn = getConnector();
-            String query = ("INSERT INTO "+ tableNames.members+ "(userName ,password, role, name) VALUES (?,?,?,?)");
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, userName);
-            preparedStmt.setString(2, password);
-            preparedStmt.setString(3, role);
-            preparedStmt.setString(4, name);
-            preparedStmt.execute();
-            conn.close();
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        try { conn = getConnector(); }
+        catch(RuntimeException e) {throw new Exception(e.getMessage()); }
+        String query = ("INSERT INTO "+ tableNames.members+ "(userName ,password, role, name) VALUES (?,?,?,?)");
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, userName);
+        preparedStmt.setString(2, password);
+        preparedStmt.setString(3, role);
+        preparedStmt.setString(4, name);
+        preparedStmt.execute();
+        conn.close();
+
     }
 
     @Override
@@ -51,8 +47,11 @@ public class MemberDA implements DataAccess<Member>
         if (member == null || newParams.isEmpty())
             throw new Exception("one of the parameters is null");
         String userName = member.getUserName();
-        Member memberDB = get(userName);
-        if (memberDB == null) { System.out.println("member doesn't exist"); }
+        Map<String, String> keyParams = new HashMap<>();
+        keyParams.put("userName", userName);
+        Member memberDB = get(keyParams);
+        if (memberDB == null)
+            throw new Exception("member doesn't exist");
         Connection conn;
         try
         {
@@ -77,9 +76,9 @@ public class MemberDA implements DataAccess<Member>
     public void delete(Member member) throws Exception
     {
         if (member == null)
-            throw new Exception("userName is null");
+            throw new Exception("member is null");
         String userNameRS = member.getUserName();
-        String roleRS = member.getClass().getSimpleName(), table;
+        String roleRS = member.getRole(), table;
         Connection conn;
         conn = getConnector();
         try
@@ -93,6 +92,7 @@ public class MemberDA implements DataAccess<Member>
                 preparedStmt.setString(1, userNameRS);
                 preparedStmt.execute();
             }
+
             //delete from members table
             String query2 = "DELETE FROM " + tableNames.members + " WHERE userName = ?";
             PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
@@ -121,10 +121,15 @@ public class MemberDA implements DataAccess<Member>
     }
 
     @Override
-    public Member get(String userName)
+    public Member get(Map<String, String> keyParams)
     {
-        if (userName == null)
+        if (keyParams.isEmpty())
             return null;
+        for (String val : keyParams.values())
+        {
+            if (val == null)
+                return null;
+        }
         ResultSet rs;
         Connection conn;
         Member member = null;
@@ -134,7 +139,7 @@ public class MemberDA implements DataAccess<Member>
         try
         {
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, userName);
+            preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
 
             while(rs.next())

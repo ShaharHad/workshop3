@@ -4,9 +4,18 @@ import java.util.ArrayList;
 
 public class EventLog
 {
-    public EventLog(ArrayList<ArrayList<EventGame>> events) {
-        this.events = events;
+    static int idCount;
+    int id;
+    ArrayList<ArrayList<EventGame>> events;
+
+    public EventLog()
+    {
+        idCount++;
+        this.id = idCount;
+        this.events = new ArrayList<>();
     }
 
-    ArrayList<ArrayList<EventGame>> events;
+    public int getID() {
+        return id;
+    }
 }
