@@ -1,5 +1,10 @@
 package Domain;
 
+import DataAccess.MemberDA;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Member
 {
     private String userName;

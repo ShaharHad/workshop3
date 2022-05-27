@@ -5,6 +5,7 @@ import Domain.Member;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
@@ -119,6 +120,14 @@ public class MemberDA implements DataAccess<Member>
         }
         return null;
     }
+
+//    public List getDataFromRoleTable(String username, String role) throws Exception
+//    {
+//        if(username == null || role == null)
+//        {
+//
+//        }
+//    }
 
     @Override
     public Member get(Map<String, String> keyParams)
