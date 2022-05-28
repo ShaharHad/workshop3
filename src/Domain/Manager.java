@@ -14,6 +14,10 @@ public class Manager extends Member
         this.teamName = teamName;
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
     static Manager getManagerFromDB(String username)
     {
         Map<String, String> map = new HashMap<>();

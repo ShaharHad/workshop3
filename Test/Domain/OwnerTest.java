@@ -108,6 +108,7 @@ class OwnerTest
         assertEquals(ownerDB.getPassword(), o.getPassword());
         assertEquals(ownerDB.getName(), o.getName());
         assertEquals(ownerDB.getTeamName(), o.getTeamName());
+        assertEquals(ownerDB.getRole(), o.getRole());
     }
 
 

@@ -102,6 +102,7 @@ class PlayerTest
         assertEquals(playerDB.getName(), p.getName());
         assertEquals(playerDB.getTeamName(), p.getTeamName());
         assertEquals(playerDB.getRoleInTeam(), p.getRoleInTeam());
+        assertEquals(playerDB.getRole(), p.getRole());
     }
 
 }

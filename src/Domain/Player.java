@@ -24,12 +24,12 @@ public class Player extends Member
     public String getTeamName(){return this.teamName;}
     public String getRoleInTeam(){return this.roleInTeam;}
 
-    public Status updateContent(){
-        return Status.Success;
-    }
-    public Status updateInfo(){
-        return Status.Success;
-    }
+//    public Status updateContent(){
+//        return Status.Success;
+//    }
+//    public Status updateInfo(){
+//        return Status.Success;
+//    }
 
     static Player getPlayerFromDB(String username)
     {

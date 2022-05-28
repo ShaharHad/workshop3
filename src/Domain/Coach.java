@@ -19,6 +19,18 @@ public class Coach extends Member
         this.teamName = teamName;
     }
 
+    public String getRoleInTeam() {
+        return roleInTeam;
+    }
+
+    public String getTraining() {
+        return training;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
     public Status updateContent(){
         return Status.Success;
     }

@@ -61,7 +61,7 @@ public class CoachDA implements DataAccess<Coach> {
                 String passwordRS = rs.getString("password");
                 String roleRS = rs.getString("role");
                 String nameRS = rs.getString("name");
-                member = new MemberData(userNameRS, passwordRS, roleRS, nameRS);
+                member = new MemberData(userNameRS, passwordRS, nameRS, roleRS);
             }
             preparedStmt.close();
 
