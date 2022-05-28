@@ -11,17 +11,18 @@ import java.util.Map;
 public class Player extends Member
 {
     Date birthDate;
-    String role;
+    String roleInTeam;
     String teamName;
 
     public Player(String username, String password, String name, Date birthDate, String roleInTeam, String teamName) {
         super(username, password, name, "player");
         this.birthDate = birthDate;
-        this.role = roleInTeam;
+        this.roleInTeam = roleInTeam;
         this.teamName = teamName;
     }
 
-
+    public String getTeamName(){return this.teamName;}
+    public String getRoleInTeam(){return this.roleInTeam;}
 
     public Status updateContent(){
         return Status.Success;

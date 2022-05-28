@@ -40,7 +40,8 @@ public class Owner extends Member
         return null;
     }
 
-    public boolean login(String username, String password) throws Exception {
+    public boolean login(String username, String password) throws Exception
+    {
         if (username == null || password == null) {
             throw new Exception("One of the parameters is null");
         }

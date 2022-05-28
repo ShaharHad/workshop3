@@ -10,24 +10,24 @@ public class Fan extends Member {
         super(username, password, name);
     }
 
-    public Status signUpToFollowPages() {
-        return Status.Success;
-    }
-
-    public Status signUpToFollowGames(){
-        return Status.Success;
-    }
-
-    public void repotBug(String str){
-
-    }
-    public String watchHistory(){
-        return "pass";
-    }
-
-    public Status updateInfo(){
-        return Status.Success;
-    }
+//    public Status signUpToFollowPages() {
+//        return Status.Success;
+//    }
+//
+//    public Status signUpToFollowGames(){
+//        return Status.Success;
+//    }
+//
+//    public void repotBug(String str){
+//
+//    }
+//    public String watchHistory(){
+//        return "pass";
+//    }
+//
+//    public Status updateInfo(){
+//        return Status.Success;
+//    }
 
     public boolean login(String password) throws Exception {
         if (password == null) {
