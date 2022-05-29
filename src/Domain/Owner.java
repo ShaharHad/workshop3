@@ -23,21 +23,45 @@ public class Owner extends Member
 
     public String get(String key)
     {
-        switch(key)
+        if (key == null)
+            return null;
+        if(key.equals("userName"))
         {
-            case "userName":
-                return this.getUserName();
-
-            case "password":
-                return this.getPassword();
-
-            case "name":
-                return this.getName();
-
-            case "teamName":
-                return this.getTeamName();
+            return this.getUserName();
         }
-        return null;
+        else if(key.equals("password"))
+        {
+            return this.getPassword();
+        }
+        else if(key.equals("name"))
+        {
+            return this.getName();
+        }
+        else if(key.equals("teamName"))
+        {
+            return this.getTeamName();
+        }
+        else
+        {
+            return null;
+        }
+
+//        switch(key)
+//        {
+//            case "userName":
+//                return this.getUserName();
+//
+//            case "password":
+//                return this.getPassword();
+//
+//            case "name":
+//                return this.getName();
+//
+//            case "teamName":
+//                return this.getTeamName();
+//            default:
+//                return null;
+//        }
     }
 
     public boolean login(String username, String password) throws Exception

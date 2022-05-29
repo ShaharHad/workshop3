@@ -79,14 +79,23 @@ class ManagerTest
     @MethodSource({"paramsProvider"})
     void emptyLoginTest(Manager m)
     {
+        boolean success = false;
         try
         {
-            boolean success = m.login(null, null);
+            success = m.login(null, m.getPassword());
+            assertFalse(success);
+        }
+        catch (Exception e) {
+            assertFalse(success);
+        }
+        try
+        {
+            success = m.login(m.getUserName(), null);
             assertFalse(success);
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertFalse(success);
         }
     }
 

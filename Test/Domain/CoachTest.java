@@ -83,14 +83,24 @@ class CoachTest
     @MethodSource({"paramsProvider"})
     void emptyLoginTest(Coach c)
     {
+        boolean success = false;
         try
         {
-            boolean success = c.login(null, null);
+            success = c.login(c.getUserName(), null);
             assertFalse(success);
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertFalse(success);
+        }
+        try
+        {
+            success = c.login(null, c.getPassword());
+            assertFalse(success);
+        }
+        catch (Exception e)
+        {
+            assertFalse(success);
         }
     }
 
