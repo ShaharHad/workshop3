@@ -2,9 +2,9 @@ package DataAccess;
 import java.sql.*;
 
 
-public class DBConnector
+class DBConnector
 {
-    public static final String URL = "jdbc:mysql://192.168.10.1:3306/javabase";
+    public static final String URL = "jdbc:mysql://localhost:3306/javabase";
     public static final String USER = "root";
     public static final String PASSWORD = "MySQLroot369";
 

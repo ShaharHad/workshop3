@@ -1,6 +1,4 @@
 package DataAccess;
 
-public class LogFile
-{
-
+public class LogFile {
 }
