@@ -1,17 +1,29 @@
 package Domain;
 
+import DataAccess.OwnerDA;
+import DataAccess.RefereeDA;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Referee extends Member
 {
     String training;
-    boolean IsMainReferee=false;
-    public Referee(String username, String password, String name, String training) {
-        super(username, password, name);
+    boolean IsMainReferee = false;
+
+
+    public Referee(String username, String password, String name, String training)
+    {
+        super(username, password, name, "referee");
         this.training = training;
     }
+
+
     public Status updateInfo(){
         return Status.Success;
     }
-    public void viewGameAssognment(){
+    public void viewGameAssignment()
+    {
     }
 
 
@@ -25,7 +37,8 @@ public class Referee extends Member
         }
         return  Status.Failure;
     }
-    public Status setGameSocore(){
+    public Status setGameSocore()
+    {
         if (IsMainReferee)
         {
 
@@ -33,4 +46,61 @@ public class Referee extends Member
         }
         return  Status.Failure;
     }
+
+
+    public String getTraining() {
+        return training;
+    }
+
+    public boolean isMainReferee() {
+        return IsMainReferee;
+    }
+
+    public void setMainReferee(boolean mainReferee) {
+        IsMainReferee = mainReferee;
+    }
+
+    public String get(String key)
+    {
+        switch(key)
+        {
+            case "userName":
+                return this.getUserName();
+
+            case "password":
+                return this.getPassword();
+
+            case "name":
+                return this.getName();
+
+            case "training":
+                return this.getTraining();
+        }
+        return null;
+    }
+
+    public static Referee getRefFromDB(String username)
+    {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        RefereeDA rda = RefereeDA.getInstance();
+        return rda.get(map);
+    }
+
+    public boolean login(String username, String password) throws Exception {
+        if (username == null || password == null) {
+            throw new Exception("One of the parameters is null");
+        }
+        RefereeDA rda = RefereeDA.getInstance();
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        Referee ref = rda.get(map);
+        if (ref == null) {
+            throw new Exception("user not exist");
+        } else
+        {
+            return ref.getPassword().equals(password);
+        }
+    }
+
 }
