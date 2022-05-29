@@ -142,23 +142,6 @@ class RefereeDATest
     }
 
     @ParameterizedTest
-    @MethodSource("saveSuccessParams")
-    void testGet(Referee refereeT, Map<String, String> keyParamsT)
-    {
-        try { r.save(refereeT); } catch (Exception e) { System.out.println("problem in save method"); }
-        Referee referee = r.get(keyParamsT);
-        assertEquals(referee.getUserName(), refereeT.getUserName());
-    }
-
-    @ParameterizedTest
-    @MethodSource("saveSuccessParams")
-    void testGetFail(Referee refereeT, Map<String, String> keyParamsT)
-    {
-        Referee referee = r.get(keyParamsT);
-        assertNull(referee);
-    }
-
-    @ParameterizedTest
     @MethodSource("noRefereeParams")
     void testDeleteNoSuccess(Referee refereeT,  Map<String, String> keyParamsT)
     {

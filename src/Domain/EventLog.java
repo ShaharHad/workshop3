@@ -18,4 +18,8 @@ public class EventLog
     public int getID() {
         return id;
     }
+
+    public void setID(int eventLogID) {
+        this.id = eventLogID;
+    }
 }

@@ -2,16 +2,15 @@ package Domain;
 import DataAccess.MemberDA;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class MemberD
+public class MemberController
 {
-    private static final MemberD instance = new MemberD();
+    private static final MemberController instance = new MemberController();
 
     //private constructor to avoid client applications to use constructor
-    public static MemberD getInstance() { return instance; }
-    private MemberD() {}
+    public static MemberController getInstance() { return instance; }
+    private MemberController() {}
 
 
     public String userLogin(String username, String password) throws Exception
@@ -26,7 +25,7 @@ public class MemberD
             Map<String, String> map = new HashMap<>();
             map.put("userName", username);
             Member m = mda.get(map);
-            String msg = "";
+            String msg;
             boolean success;
             switch(m.getRole())
             {

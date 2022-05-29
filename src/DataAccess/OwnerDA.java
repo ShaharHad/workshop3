@@ -138,18 +138,15 @@ public class OwnerDA implements DataAccess<Owner>
         catch (Exception e) { System.out.println("problem in delete function"); }
     }
 
-    private String getTableFromRole(String roleRS) throws Exception
+    private String getTableFromRole(String roleRS)
     {
         if (roleRS == null)
-            throw new Exception("role is null");
-        else
+            return null;
+        for (tableNames table : tableNames.values())
         {
-            for (tableNames table : tableNames.values())
+            if ((table.name().equals(roleRS + "s")) || table.name().equals(roleRS + "es"))
             {
-                if ((table.name().equals(roleRS + "s")) || table.name().equals(roleRS + "es"))
-                {
-                    return table.name();
-                }
+                return table.name();
             }
         }
         return null;
@@ -158,13 +155,6 @@ public class OwnerDA implements DataAccess<Owner>
     @Override
     public Owner get(Map<String, String> keyParams)
     {
-        if (keyParams.isEmpty())
-            return null;
-        for (String val : keyParams.values())
-        {
-            if (val == null)
-                return null;
-        }
         ResultSet rs;
         Connection conn;
         Member member = null;

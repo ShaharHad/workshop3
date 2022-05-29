@@ -2,6 +2,7 @@ package DataAccess;
 
 import Domain.Member;
 import Domain.Owner;
+import Domain.Referee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,6 +27,7 @@ class MemberDATest
     Map<String, String> keyParamsLeah;
     Map<String, String> keyParamsMaxim;
     Map<String, String> keyParamsFan;
+    Map<String, String> keyParamsEmpty;
 
     @BeforeAll
     public void beforeAll()
@@ -35,6 +37,7 @@ class MemberDATest
         memberFan = new MemberData("sha3", "sha3", "arnon", "fan");
         keyParamsLeah = new HashMap<>();
         keyParamsMaxim = new HashMap<>();
+        keyParamsEmpty = new HashMap<>();
         keyParamsFan = new HashMap<>();
         keyParamsLeah.put("userName", memberLeah.getUserName());
         keyParamsFan.put("userName", memberFan.getUserName());
@@ -92,6 +95,22 @@ class MemberDATest
         catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Stream<Arguments> noMemberUpdateParams()
+    {
+        return Stream.of(
+                Arguments.of(null, keyParamsLeah),
+                Arguments.of(memberMaxim, keyParamsEmpty)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noMemberUpdateParams"})
+    void noMemberUpdateTest(Member memberT, Map<String, String> updateParamsT)
+    {
+        try { m.update(memberT, updateParamsT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "one of the parameters is null"); }
     }
 
 

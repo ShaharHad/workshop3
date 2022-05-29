@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -29,8 +31,18 @@ class PlayerDATest {
     @BeforeAll
     public void beforeAll()
     {
-        playerShahar = new Player("hshah", "12345Q", "shahar", new Date(2017,10,22),  "defence", "Madrid");
-        playerInbar = new Player("inbarza", "5g5gT", "inbar", new Date(2017,10,22), "attack", "Madrid");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        java.sql.Date sqlDate;
+        try {
+            java.util.Date utilDate = format.parse("22-10-2017");
+            sqlDate = new java.sql.Date(utilDate.getTime());
+            playerShahar = new Player("hshah", "12345Q", "shahar", sqlDate,  "defence", "Madrid");
+        } catch (ParseException e) { System.out.println(e.getMessage()); }
+        try {
+            java.util.Date utilDate = format.parse("22-10-2017");
+            sqlDate = new java.sql.Date(utilDate.getTime());
+            playerInbar = new Player("inbarza", "5g5gT", "inbar", sqlDate, "attack", "Madrid");
+        } catch (ParseException e) { System.out.println(e.getMessage()); }
         keyParamsShahar = new HashMap<>();
         keyParamsInbar = new HashMap<>();
         keyParamsShahar.put("userName", "hshah");

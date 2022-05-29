@@ -1,7 +1,7 @@
 package DataAccess;
 
+import Domain.Member;
 import Domain.Owner;
-import Domain.Referee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +19,7 @@ class OwnerDATest
 {
     Owner ownerLeah;
     Owner ownerMaxim;
+    Owner ownerNonExist;
     OwnerDA o = OwnerDA.getInstance();
     Map<String, String> keyParamsLeah;
     Map<String, String> keyParamsMaxim;
@@ -32,6 +33,7 @@ class OwnerDATest
     {
         ownerLeah = new Owner("leahma", "12345Q", "", "Eagles");
         ownerMaxim = new Owner("maxi2", "5g5gT", "maxim", "");
+        ownerNonExist = new Owner("oror", "63wlgaet", "or", "Real-Madrid");
         keyParamsLeah = new HashMap<>();
         keyParamsMaxim = new HashMap<>();
         keyParamsEmpty = new HashMap<>();
@@ -70,28 +72,29 @@ class OwnerDATest
         }
     }
 
-    private Stream<Arguments> noMemberParams()
-    {
-        return Stream.of(
-                Arguments.of(ownerLeah, updateParamsLeah),
-                Arguments.of(ownerMaxim, updateParamsMaxim)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource({"noMemberParams"})
-    void noMemberUpdateTest(Owner ownerT, Map<String, String> updateParamsT)
-    {
-        try { o.update(ownerT, updateParamsT); }
-        catch (Exception e) { assertEquals(e.getMessage(), "member doesn't exist"); }
-    }
-
     @ParameterizedTest
     @MethodSource({"noOwnerUpdateParams"})
     void noOwnerUpdateTest(Owner ownerT, Map<String, String> updateParamsT)
     {
         try { o.update(ownerT, updateParamsT); }
         catch (Exception e) { assertEquals(e.getMessage(), "one of the parameters is null"); }
+    }
+
+    private Stream<Arguments> noMemberDBUpdateParams()
+    {
+        {
+            return Stream.of(
+                    Arguments.of(ownerNonExist, updateParamsLeah)
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource({"noMemberDBUpdateParams"})
+    void noMemberDBUpdateTest(Owner ownerT, Map<String, String> updateParamsT)
+    {
+        try { o.update(ownerT, updateParamsT); }
+        catch (Exception e) { assertEquals(e.getMessage(), "member doesn't exist"); }
     }
 
 
@@ -154,14 +157,5 @@ class OwnerDATest
         {
             throw new RuntimeException(e);
         }
-    }
-
-    @ParameterizedTest
-    @MethodSource("paramsProvider")
-    void testGet(Owner ownerT, Map<String, String> keyParamsT)
-    {
-        try { o.save(ownerT); } catch (Exception e) { System.out.println("problem in save method"); }
-        Owner owner = o.get(keyParamsT);
-        assertEquals(owner.getUserName(), ownerT.getUserName());
     }
 }

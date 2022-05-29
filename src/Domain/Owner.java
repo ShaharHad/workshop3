@@ -1,9 +1,7 @@
 package Domain;
 
-import DataAccess.MemberDA;
 import DataAccess.OwnerDA;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +54,6 @@ public class Owner extends Member
             return member.getPassword().equals(password);
         }
     }
-
 
 
     static Owner getOwnerFromDB(String username)

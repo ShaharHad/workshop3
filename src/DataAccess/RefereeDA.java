@@ -162,7 +162,7 @@ public class RefereeDA implements DataAccess<Referee>
         }
         ResultSet rs;
         Connection conn;
-        Member member = null;
+        Member memberData = null;
         Referee referee = null;
         try
         {
@@ -178,7 +178,7 @@ public class RefereeDA implements DataAccess<Referee>
                 String passwordRS = rs.getString("password");
                 String roleRS = rs.getString("role");
                 String nameRS = rs.getString("name");
-                member = new MemberData(userNameRS, passwordRS, nameRS, roleRS);
+                memberData = new MemberData(userNameRS, passwordRS, nameRS, roleRS);
             }
             preparedStmt.close();
 
@@ -192,7 +192,7 @@ public class RefereeDA implements DataAccess<Referee>
                 String userNameRS = rs.getString("userName");
                 String trainingRS = rs.getString("training");
                 boolean isMainRefereeRS = rs.getBoolean("isMainReferee");
-                referee = new Referee(userNameRS, member.getPassword(), member.getName(), trainingRS);
+                referee = new Referee(userNameRS, memberData.getPassword(), memberData.getName(), trainingRS);
                 referee.setMainReferee(isMainRefereeRS);
             }
             preparedStmt.close();

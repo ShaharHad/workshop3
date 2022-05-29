@@ -1,27 +1,179 @@
 package DataAccess;
 
-import org.junit.jupiter.api.Test;
+import Domain.Game;
+import Domain.Owner;
+import Domain.Team;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GameDATest
 {
+    Game gameEaglesFalcons, gameLiverpoolChelsea;
+    Game nullTeamsGame, singleTeamNullGame;
+    GameDA g = GameDA.getInstance();
+    Team homeTeamFalcons, homeTeamChelsea;
+    Team guestTeamEagles, guestTeamLiverpool;
+    Owner homeOwnerFalcons, homeOwnerChelsea;
+    Owner guestOwnerEagles, guestOwnerLiverpool;
 
-    @Test
-    void save()
+    Map<String, String> keyParamsEaglesFalcons;
+    Map<String, String> keyParamsLiverpoolChelsea;
+
+    @BeforeAll
+    void beforeAll()
     {
+        guestOwnerEagles = new Owner("Jeff123", "eagles4Ev", "Jeffrey Lurie", "Eagles");
+        try {
+            guestTeamEagles = new Team(guestOwnerEagles, "Eagles", "Lincoln Financial Field");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        homeOwnerFalcons = new Owner("artyBl", "falconsRule", "Arthur Blank", "Falcons");
+        try {
+            homeTeamFalcons = new Team(homeOwnerFalcons, "Falcons", "Mercedes-Benz Stadium");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        try {
+            gameEaglesFalcons = new Game(guestTeamEagles, homeTeamFalcons);
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+        java.util.Date utilDate = format.parse("12-09-2021");
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        gameEaglesFalcons.setDate(sqlDate);
+        } catch (ParseException e) { System.out.println(e.getMessage()); }
+        gameEaglesFalcons.setField("Mercedes-Benz Stadium");
 
+        guestOwnerLiverpool = new Owner("johnny4", "liverLive", "John W. Henry", "Liverpool");
+        try {
+            guestTeamLiverpool = new Team(guestOwnerLiverpool, "Liverpool", "Anfield");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        homeOwnerChelsea = new Owner("romRom", "che123", "Roman Abramovich", "Chelsea");
+        try {
+            homeTeamChelsea = new Team(homeOwnerChelsea, "Chelsea", "Stamford Bridge");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        try {
+            gameLiverpoolChelsea = new Game(guestTeamLiverpool, homeTeamChelsea);
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        try {
+            java.util.Date utilDate = format.parse("02-01-2022");
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            gameLiverpoolChelsea.setDate(sqlDate);
+        } catch (ParseException e) { System.out.println(e.getMessage()); }
+        gameLiverpoolChelsea.setField("Stamford Bridge");
+
+        try {
+            nullTeamsGame = new Game(null, null);
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+
+        try {
+            singleTeamNullGame = new Game(guestTeamEagles, null);
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+
+        keyParamsEaglesFalcons = new HashMap<>();
+        keyParamsEaglesFalcons.put("guestTeam", "Eagles");
+        keyParamsEaglesFalcons.put("homeTeam", "Falcons");
+        keyParamsEaglesFalcons.put("fieldName", "Mercedes-Benz Stadium");
+        keyParamsEaglesFalcons.put("date", "2021-09-12");
+
+        keyParamsLiverpoolChelsea = new HashMap<>();
+        keyParamsLiverpoolChelsea.put("guestTeam", "Liverpool");
+        keyParamsLiverpoolChelsea.put("homeTeam", "Chelsea");
+        keyParamsLiverpoolChelsea.put("fieldName", "Stamford Bridge");
+        keyParamsLiverpoolChelsea.put("date", "2022-01-02");
     }
 
-    @Test
-    void update() {
+    private Stream<Arguments> nullTeamsParam()
+    {
+        return Stream.of(
+                Arguments.of(nullTeamsGame),
+                Arguments.of(singleTeamNullGame)
+        );
     }
 
-    @Test
-    void delete() {
+    @ParameterizedTest
+    @MethodSource("nullTeamsParam")
+    void testNullTeamsGame(Game gameT)
+    {
+        try
+        { g.save(gameT); }
+        catch (Exception e) {
+            assertEquals(e.getMessage(), "game is null");
+        }
     }
 
-    @Test
-    void get() {
+    private Stream<Arguments> gamesSaveParams()
+    {
+        return Stream.of(
+                Arguments.of(gameEaglesFalcons, keyParamsEaglesFalcons),
+                Arguments.of(gameLiverpoolChelsea, keyParamsLiverpoolChelsea)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesSaveParams")
+    void testSaveGame(Game gameT, Map<String, String> keyParams)
+    {
+        try { g.save(gameT); }
+        catch (Exception e) {
+            assertEquals(e.getMessage(), "Error connecting to the database");
+        }
+        Game gameDB = g.get(keyParams);
+        assertEquals(gameDB.getGuestGroup().getTeamName(), gameT.getGuestGroup().getTeamName());
+        assertEquals(gameDB.getHomeGroup().getTeamName(), gameT.getHomeGroup().getTeamName());
+        assertEquals(gameDB.getDate(), gameT.getDate());
+        assertEquals(gameDB.getField(), gameT.getField());
+    }
+
+    private Stream<Arguments> gamesUpdateParams()
+    {
+        Map<String, String> updateEaglesFalcons = new HashMap<>();
+        updateEaglesFalcons.put("hour", "11");
+        updateEaglesFalcons.put("date", "11-11-2022");
+        Map<String, String> updateLiverpoolChelsea = new HashMap<>();
+        updateLiverpoolChelsea.put("hour", "15");
+        return Stream.of(
+                Arguments.of(gameEaglesFalcons, updateEaglesFalcons),
+                Arguments.of(gameLiverpoolChelsea, updateLiverpoolChelsea)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesUpdateParams")
+    void testUpdateGame(Game gameT, Map<String, String> newParamsT)
+    {
+        try {
+            g.update(gameT, newParamsT);
+        } catch (Exception e) {
+            assertEquals("Error connecting to the database", e.getMessage());
+        }
+    }
+
+    private Stream<Arguments> gamesDelParams()
+    {
+        return Stream.of(
+                Arguments.of(gameLiverpoolChelsea)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesDelParams")
+    void testDelete(Game gameT)
+    {
+        try {
+            g.delete(gameT);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

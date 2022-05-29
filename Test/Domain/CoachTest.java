@@ -1,7 +1,6 @@
 package Domain;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +9,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,8 +32,6 @@ class CoachTest
         keyParamsCoach1.put("userName", coach1.getUserName());
         keyParamsCoach2.put("userName", coach2.getUserName());
 
-
-
     }
 
     private Stream<Arguments> paramsProvider()
@@ -58,7 +54,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -75,7 +71,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -90,7 +86,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
