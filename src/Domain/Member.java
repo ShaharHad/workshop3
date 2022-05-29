@@ -1,5 +1,10 @@
 package Domain;
 
+import DataAccess.MemberDA;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Member
 {
     private String userName;
@@ -41,6 +46,15 @@ public abstract class Member
 
     public String getRole() {
         return role;
+    }
+
+    public String show(boolean success, String username, String role)
+    {
+        if(success)
+        {
+            return username + " success to login as " + role;
+        }
+        return "Username or Password is incorrect";
     }
 
 

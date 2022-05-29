@@ -1,40 +1,40 @@
 package DataAccess;
 
+import Domain.Coach;
 import Domain.Manager;
-import Domain.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
 
-public class PlayerDA implements DataAccess<Player>{
-    private static final PlayerDA instance = new PlayerDA();
+public class CoachDA implements DataAccess<Coach> {
+    private static final CoachDA instance = new CoachDA();
 
     //private constructor to avoid client applications to use constructor
-    public static PlayerDA getInstance() { return instance; }
-    private PlayerDA() {}
+    public static CoachDA getInstance() { return instance; }
+    private CoachDA() {}
+
     @Override
-    public void save(Player player) throws Exception {
+    public void save(Coach coach) throws Exception {
 
     }
 
     @Override
-    public void update(Player player, Map<String, String> newParams) throws Exception {
+    public void update(Coach coach, Map<String, String> newParams) throws Exception {
 
     }
 
     @Override
-    public void delete(Player player) throws Exception {
+    public void delete(Coach coach) throws Exception {
 
     }
 
     @Override
-    public Player get(Map<String, String> keyParams) {
+    public Coach get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;
         for (String val : keyParams.values())
@@ -45,7 +45,7 @@ public class PlayerDA implements DataAccess<Player>{
         ResultSet rs;
         Connection conn;
         MemberData member = null;
-        Player player = null;
+        Coach coach = null;
         conn = getConnector();
         String query = "select * from javabase." + tableNames.members + " where userName = ?";
         PreparedStatement preparedStmt;
@@ -65,7 +65,7 @@ public class PlayerDA implements DataAccess<Player>{
             }
             preparedStmt.close();
 
-            String query2 = "select * from javabase." + tableNames.players + " where userName = ?";
+            String query2 = "select * from javabase." + tableNames.coaches + " where userName = ?";
             preparedStmt = conn.prepareStatement(query2);
             preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
@@ -74,11 +74,9 @@ public class PlayerDA implements DataAccess<Player>{
             {
                 String userNameRS = rs.getString("userName");
                 String teamNameRS = rs.getString("teamName");
-
-                Date birthDateRS = rs.getDate("birthDate");
-                String roleRS = rs.getString("role");
-
-                player = new Player(userNameRS, member.getPassword(), member.getName(), birthDateRS, roleRS, teamNameRS);
+                String trainingRS = rs.getString("training");
+                String roleInTeam = rs.getString("role");
+                coach = new Coach(userNameRS, member.getPassword(), member.getName(),roleInTeam,trainingRS, teamNameRS);
             }
             preparedStmt.close();
             conn.close();
@@ -87,6 +85,6 @@ public class PlayerDA implements DataAccess<Player>{
             return null;
         }
 
-        return player;
+        return coach;
     }
 }

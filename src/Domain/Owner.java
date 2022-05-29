@@ -1,5 +1,12 @@
 package Domain;
 
+import DataAccess.MemberDA;
+import DataAccess.OwnerDA;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Owner extends Member
 {
     String teamName;
@@ -32,6 +39,34 @@ public class Owner extends Member
         }
         return null;
     }
+
+    public boolean login(String username, String password) throws Exception
+    {
+        if (username == null || password == null) {
+            throw new Exception("One of the parameters is null");
+        }
+        OwnerDA oda = OwnerDA.getInstance();
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        Member member = oda.get(map);
+        if (member == null) {
+            throw new Exception("user not exist");
+        } else
+        {
+            return member.getPassword().equals(password);
+        }
+    }
+
+
+
+    static Owner getOwnerFromDB(String username)
+    {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        OwnerDA oda = OwnerDA.getInstance();
+        return oda.get(map);
+    }
+
 }
 
 

@@ -1,40 +1,31 @@
 package DataAccess;
 
 import Domain.Manager;
-import Domain.Player;
+import Domain.Member;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
 
-public class PlayerDA implements DataAccess<Player>{
-    private static final PlayerDA instance = new PlayerDA();
+public class ManagerDA implements DataAccess<Manager> {
+    private static final ManagerDA instance = new ManagerDA();
 
     //private constructor to avoid client applications to use constructor
-    public static PlayerDA getInstance() { return instance; }
-    private PlayerDA() {}
+    public static ManagerDA getInstance() { return instance; }
+    private ManagerDA() {}
+
     @Override
-    public void save(Player player) throws Exception {
+    public void save(Manager manager) throws Exception {
 
     }
 
     @Override
-    public void update(Player player, Map<String, String> newParams) throws Exception {
-
-    }
-
-    @Override
-    public void delete(Player player) throws Exception {
-
-    }
-
-    @Override
-    public Player get(Map<String, String> keyParams) {
+    public Manager get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;
         for (String val : keyParams.values())
@@ -45,7 +36,7 @@ public class PlayerDA implements DataAccess<Player>{
         ResultSet rs;
         Connection conn;
         MemberData member = null;
-        Player player = null;
+        Manager manager = null;
         conn = getConnector();
         String query = "select * from javabase." + tableNames.members + " where userName = ?";
         PreparedStatement preparedStmt;
@@ -65,7 +56,7 @@ public class PlayerDA implements DataAccess<Player>{
             }
             preparedStmt.close();
 
-            String query2 = "select * from javabase." + tableNames.players + " where userName = ?";
+            String query2 = "select * from javabase." + tableNames.managers + " where userName = ?";
             preparedStmt = conn.prepareStatement(query2);
             preparedStmt.setString(1, keyParams.get("userName"));
             rs = preparedStmt.executeQuery();
@@ -74,11 +65,7 @@ public class PlayerDA implements DataAccess<Player>{
             {
                 String userNameRS = rs.getString("userName");
                 String teamNameRS = rs.getString("teamName");
-
-                Date birthDateRS = rs.getDate("birthDate");
-                String roleRS = rs.getString("role");
-
-                player = new Player(userNameRS, member.getPassword(), member.getName(), birthDateRS, roleRS, teamNameRS);
+                manager = new Manager(userNameRS, member.getPassword(), member.getName(), teamNameRS);
             }
             preparedStmt.close();
             conn.close();
@@ -87,6 +74,16 @@ public class PlayerDA implements DataAccess<Player>{
             return null;
         }
 
-        return player;
+        return manager;
+    }
+
+    @Override
+    public void update(Manager manager, Map<String, String> newParams) throws Exception {
+
+    }
+
+    @Override
+    public void delete(Manager manager) throws Exception {
+
     }
 }
