@@ -1,68 +1,31 @@
 package Service;
 
-import Domain.MemberController;
+import Domain.MemberD;
+
+import java.util.Scanner;
+
 
 public class Main
 {
-    public static void main(String[] args) throws Exception
-    {
-        // test1 - fan
-        String username = "test1";
-        String password = "test1";
-        MemberController md = MemberController.getInstance();
-        String t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-        // test2 - coach
-        username = "test2";
-        password = "test2";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-        // test3 - player
-        username = "test3";
-        password = "test3";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-
-        // test4 - manager
-        username = "test4";
-        password = "test4";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-
-        // test5 - owner
-        username = "test5";
-        password = "test5";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-        // test6 - representative
-        username = "test6";
-        password = "test6";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
-
-        // test7 - referee
-        username = "test7";
-        password = "test7";
-        t = md.userLogin(username, password);
-        System.out.println(t);
-        System.out.println();
-
+    public static void main(String[] args) throws Exception {
+        String username;
+        String password;
+        MemberD md;
+        Scanner input;
+        // to stop the loop insert "stop" in username or password and the loop will stop
+        try {
+            md = MemberD.getInstance();
+            input = new Scanner(System.in);
+            System.out.println("Insert username");
+            username = input.nextLine();
+            System.out.println("Insert password");
+            password = input.nextLine();
+            String msg = md.userLogin(username, password);
+            System.out.println(msg);
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println("user or password not match");
+            System.out.println();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package Domain;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +34,8 @@ class CoachTest
         keyParamsCoach1.put("userName", coach1.getUserName());
         keyParamsCoach2.put("userName", coach2.getUserName());
 
+
+
     }
 
     private Stream<Arguments> paramsProvider()
@@ -54,7 +58,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
 
     }
@@ -71,7 +75,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -79,14 +83,24 @@ class CoachTest
     @MethodSource({"paramsProvider"})
     void emptyLoginTest(Coach c)
     {
+        boolean success = false;
         try
         {
-            boolean success = c.login(null, null);
+            success = c.login(c.getUserName(), null);
             assertFalse(success);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            assertFalse(success);
+        }
+        try
+        {
+            success = c.login(null, c.getPassword());
+            assertFalse(success);
+        }
+        catch (Exception e)
+        {
+            assertFalse(success);
         }
     }
 

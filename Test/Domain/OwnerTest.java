@@ -87,9 +87,17 @@ class OwnerTest
     @MethodSource({"paramsProvider"})
     void emptyLoginTest(Owner o)
     {
+        boolean success = false;
+        try {
+            success = o.login(null, o.getPassword());
+            assertFalse(success);
+        }
+        catch (Exception e) {
+            assertFalse(success);
+        }
         try
         {
-            boolean success = o.login(null, null);
+            success = o.login(o.getUserName(), null);
             assertFalse(success);
         }
         catch (Exception e)
@@ -120,6 +128,7 @@ class OwnerTest
         {
             assertEquals(keyParams.get(key), ownerAria.get(key));
         }
-
+        assertNull(ownerAria.get("jibrish"));
+        assertNull(ownerAria.get(null));
     }
 }
