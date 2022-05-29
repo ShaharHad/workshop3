@@ -31,12 +31,12 @@ public class Coach extends Member
         return teamName;
     }
 
-    public Status updateContent(){
-        return Status.Success;
-    }
-    public Status updateInfo(){
-        return Status.Success;
-    }
+//    public Status updateContent(){
+//        return Status.Success;
+//    }
+//    public Status updateInfo(){
+//        return Status.Success;
+//    }
 
     public boolean login(String username, String password) throws Exception {
         if (username == null || password == null) {

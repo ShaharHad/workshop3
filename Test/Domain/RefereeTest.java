@@ -22,6 +22,7 @@ class RefereeTest
     Map<String, String> keyParamsReferee1;
     Map<String, String> keyParamsReferee2;
     Map<String, String> keyParams;
+    boolean refereeMain;
 
     //need to add the users below manually
     @BeforeAll
@@ -38,7 +39,7 @@ class RefereeTest
         keyParams.put("password", referee1.getPassword());
         keyParams.put("name", referee1.getName());
         keyParams.put("training", referee1.getTraining());
-
+        refereeMain = referee1.isMainReferee();
 
     }
 
@@ -89,7 +90,9 @@ class RefereeTest
     {
         try
         {
-            boolean success = r.login(null, null);
+            boolean success = r.login(null, r.getPassword());
+            assertFalse(success);
+            success = r.login(r.getUserName(), null);
             assertFalse(success);
         }
         catch (Exception e)
@@ -120,7 +123,15 @@ class RefereeTest
         {
             assertEquals(keyParams.get(key), referee1.get(key));
         }
+        assertNull(referee1.get("jibrish"));
+        assertNull(referee1.get(null));
 
+    }
+
+    @Test
+    void isMainRefereeTest()
+    {
+        assertEquals(refereeMain, referee1.isMainReferee());
     }
 
 }

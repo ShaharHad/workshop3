@@ -31,6 +31,10 @@ public class Player extends Member
 //        return Status.Success;
 //    }
 
+
+
+
+
     static Player getPlayerFromDB(String username)
     {
         Map<String, String> map = new HashMap<>();
@@ -39,7 +43,7 @@ public class Player extends Member
         return pda.get(map);
     }
 
-    public boolean login(String username, String password) throws Exception {
+    public boolean login(String username, String password) throws Exception{
         if (username == null || password == null) {
             throw new Exception("One of the parameters is null");
         }
@@ -49,10 +53,8 @@ public class Player extends Member
         Player p = pda.get(map);
         if (p == null) {
             throw new Exception("user not exist");
-        } else
-        {
-            return p.getPassword().equals(password);
         }
+        return p.getPassword().equals(password);
     }
 
 }

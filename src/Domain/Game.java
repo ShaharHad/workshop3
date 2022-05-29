@@ -1,6 +1,8 @@
 package Domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game
 {
@@ -13,12 +15,16 @@ public class Game
     EventLog eventLog;
     int seasonID;
     int LeagueID;
+    List<Referee> refereeList;
 
-    public Game(Team guestGroup, Team homeGroup)
+    public Game(Team guestGroup, Team homeGroup) throws Exception
     {
+        if (guestGroup == null || homeGroup == null)
+            throw new Exception("one of the params is null!");
         this.guestGroup = guestGroup;
         this.homeGroup = homeGroup;
         this.eventLog = new EventLog();
+        refereeList = new ArrayList<>();
     }
 
     public java.sql.Date getDate() {
@@ -37,6 +43,14 @@ public class Game
         return homeGroup;
     }
 
+    public void setGuestGroup(Team guestGroup) {
+        this.guestGroup = guestGroup;
+    }
+
+    public void setHomeGroup(Team homeGroup) {
+        this.homeGroup = homeGroup;
+    }
+
     public String getField() {
         return field;
     }
@@ -47,6 +61,10 @@ public class Game
 
     public EventLog getEventLog() {
         return eventLog;
+    }
+
+    public void setEventLogID(int eventLogID) {
+        this.eventLog.setID(eventLogID);
     }
 
     public int getSeasonID() {

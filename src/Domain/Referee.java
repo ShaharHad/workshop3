@@ -19,33 +19,33 @@ public class Referee extends Member
     }
 
 
-    public Status updateInfo(){
-        return Status.Success;
-    }
-    public void viewGameAssignment()
-    {
-    }
+//    public Status updateInfo(){
+//        return Status.Success;
+//    }
+//    public void viewGameAssignment()
+//    {
+//    }
 
 
     ///////////////////__Only_IF_IsMainReferee_///////////////////////
-    public Status updateEventLog(){
-
-        if (IsMainReferee)
-        {
-
-            return Status.Success;
-        }
-        return  Status.Failure;
-    }
-    public Status setGameSocore()
-    {
-        if (IsMainReferee)
-        {
-
-            return Status.Success;
-        }
-        return  Status.Failure;
-    }
+//    public Status updateEventLog(){
+//
+//        if (IsMainReferee)
+//        {
+//
+//            return Status.Success;
+//        }
+//        return  Status.Failure;
+//    }
+//    public Status setGameSocore()
+//    {
+//        if (IsMainReferee)
+//        {
+//
+//            return Status.Success;
+//        }
+//        return  Status.Failure;
+//    }
 
 
     public String getTraining() {
@@ -62,21 +62,47 @@ public class Referee extends Member
 
     public String get(String key)
     {
-        switch(key)
+        if (key == null)
         {
-            case "userName":
-                return this.getUserName();
-
-            case "password":
-                return this.getPassword();
-
-            case "name":
-                return this.getName();
-
-            case "training":
-                return this.getTraining();
+            return null;
         }
-        return null;
+        if(key.equals("userName"))
+        {
+            return this.getUserName();
+        }
+        else if(key.equals("password"))
+        {
+            return this.getPassword();
+        }
+        else if(key.equals("name"))
+        {
+            return this.getName();
+        }
+        else if(key.equals("training"))
+        {
+            return this.getTraining();
+        }
+        else
+        {
+            return null;
+        }
+
+
+//        switch(key)
+//        {
+//            case "userName":
+//                return this.getUserName();
+//
+//            case "password":
+//                return this.getPassword();
+//
+//            case "name":
+//                return this.getName();
+//
+//            case "training":
+//                return this.getTraining();
+//        }
+//        return null;
     }
 
     public static Referee getRefFromDB(String username)
@@ -87,16 +113,18 @@ public class Referee extends Member
         return rda.get(map);
     }
 
-    public boolean login(String username, String password) throws Exception {
+    public boolean login(String username, String password){
         if (username == null || password == null) {
-            throw new Exception("One of the parameters is null");
+//            throw new Exception("One of the parameters is null");
+            return false;
         }
         RefereeDA rda = RefereeDA.getInstance();
         Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         Referee ref = rda.get(map);
         if (ref == null) {
-            throw new Exception("user not exist");
+//            throw new Exception("user not exist");
+            return false;
         } else
         {
             return ref.getPassword().equals(password);
