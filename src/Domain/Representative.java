@@ -1,5 +1,6 @@
 package Domain;
 
+import DataAccess.MemberDA;
 import DataAccess.OwnerDA;
 
 import java.util.HashMap;
@@ -37,7 +38,14 @@ public class Representative extends Member
         return this.getPassword().equals(password);
     }
 
-
+    static Representative getRepresentativeFromDB(String username)
+    {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        MemberDA mda = MemberDA.getInstance();
+        Member m = mda.get(map);
+        return new Representative(m.getUserName(), m.getPassword(), m.getName());
+    }
 
 
 }

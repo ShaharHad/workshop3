@@ -1,5 +1,7 @@
 package Domain;
 
+import DataAccess.CoachDA;
+import DataAccess.MemberDA;
 import DataAccess.OwnerDA;
 
 import java.util.HashMap;
@@ -31,8 +33,9 @@ public class Fan extends Member {
 
     public boolean login(String password) throws Exception {
         if (password == null) {
-            throw new Exception("One of the parameters is null");
+            throw new Exception("parameter is null");
         }
         return this.getPassword().equals(password);
     }
+
 }

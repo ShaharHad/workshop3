@@ -92,4 +92,15 @@ class RepresentativeTest
         }
     }
 
+    @ParameterizedTest
+    @MethodSource({"paramsProvider"})
+    void getOwnerFromDBTest(Representative r)
+    {
+        Representative representativeDB = Representative.getRepresentativeFromDB(r.getUserName());
+        assertEquals(representativeDB.getUserName(), r.getUserName());
+        assertEquals(representativeDB.getPassword(), r.getPassword());
+        assertEquals(representativeDB.getName(), r.getName());
+        assertEquals(representativeDB.getRole(), r.getRole());
+    }
+
 }
