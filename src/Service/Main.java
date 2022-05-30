@@ -22,8 +22,6 @@ public class Main
             username = input.nextLine();
             System.out.println("Insert password");
             password = input.nextLine();
-            String msg = md.userLogin(username, password);
-            System.out.println(msg);
             System.out.println();
         } catch (Exception e) {
             System.out.println("user or password not match");
