@@ -1,20 +1,22 @@
 package Service;
 
-import Domain.MemberD;
+import Domain.MemberController;
 
 import java.util.Scanner;
 
 
 public class Main
 {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)
+    {
         String username;
         String password;
-        MemberD md;
+        MemberController md;
         Scanner input;
         // to stop the loop insert "stop" in username or password and the loop will stop
-        try {
-            md = MemberD.getInstance();
+        try
+        {
+            md = MemberController.getInstance();
             input = new Scanner(System.in);
             System.out.println("Insert username");
             username = input.nextLine();
