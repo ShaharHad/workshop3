@@ -1,7 +1,5 @@
 package DataAccess;
 
-import Domain.Member;
-
 import java.util.Map;
 
 public interface DataAccess<T>

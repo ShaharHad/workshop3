@@ -2,12 +2,14 @@ package DataAccess;
 
 import Domain.Game;
 import Domain.Owner;
+import Domain.Referee;
 import Domain.Team;
 
 import java.sql.*;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,6 +153,7 @@ public class GameDA implements DataAccess<Game>
         String queryTeams = "select * from javabase." + tableNames.teams + " where teamName = ?";
         String queryOwners = "select * from javabase." + tableNames.owners + " where userName = ?";
         String queryMembers = "select * from javabase." + tableNames.members + " where userName = ?";
+
         PreparedStatement preparedStmt;
         String homeTeamName = keyParams.get("homeTeam"), homeTeamRS = "";
         String guestTeamName = keyParams.get("guestTeam"), guestTeamRS = "";
@@ -253,6 +256,7 @@ public class GameDA implements DataAccess<Game>
 
             owner = new Owner(member.getUserName(), member.getPassword(), member.getName(), homeTeamRS);
             guestTeam = new Team(owner, guestTeamRS, homeFieldRS);
+
             game = new Game(guestTeam, homeTeam);
             game.setField(fieldRS);
             game.setSeasonID(seasonIDRS);
