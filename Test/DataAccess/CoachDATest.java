@@ -22,7 +22,6 @@ class CoachDATest
     Map<String, String> keyParamsMazal;
 
 
-    //need to add the 2 users below to the DB manually
     @BeforeAll
     public void beforeAll()
     {
@@ -44,7 +43,6 @@ class CoachDATest
 
     @ParameterizedTest
     @MethodSource("paramsProvider")
-    /** A test designed to check for the identification of a judge's instance in DB*/
     void testGet(Coach coachT, Map<String, String> keyParamsT)
     {
         Coach coach = c.get(keyParamsT);

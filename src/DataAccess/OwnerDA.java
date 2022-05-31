@@ -20,12 +20,13 @@ public class OwnerDA implements DataAccess<Owner>
      */
     private OwnerDA() {}
 
-    @Override
     /**
      * function save: save a new owner in DB
      * @param owner $owner
-     * @create a new instance of owner in DB type void
+     * create a new instance of owner in DB type void
      */
+    @Override
+
     public void save(Owner owner) throws Exception
     {
         if (owner == null)
@@ -54,13 +55,14 @@ public class OwnerDA implements DataAccess<Owner>
         conn.close();
     }
 
-    @Override
     /**
      * function update: update the owner in DB
      * @param owner $owner
      * @param newParams $newParams
-     * @updete DB of Owner type void
+     * update DB of Owner type void
      */
+    @Override
+
     public void update(Owner owner, Map<String, String> newParams) throws Exception
     {
         if (owner == null || newParams.isEmpty())
@@ -122,12 +124,13 @@ public class OwnerDA implements DataAccess<Owner>
         }
     }
 
-    @Override
     /**
      * function delete: delete the owner from DB
      * @param owner $owner
-     * @delete Owner from DB type void
+     * delete Owner from DB type void
      */
+    @Override
+
     public void delete(Owner owner) throws Exception
     {
         if (owner == null)
@@ -176,13 +179,14 @@ public class OwnerDA implements DataAccess<Owner>
         return null;
     }
 
-    @Override
     /**
      * function get : Connects to the database  and return Owner object from the DB
      * the function find by keyParams of the Owner in DB and return object of hem.
      * @param keyParams $keyParams
      * @return Owner
      */
+    @Override
+
     public Owner get(Map<String, String> keyParams)
     {
         ResultSet rs;

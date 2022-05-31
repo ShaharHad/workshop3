@@ -24,12 +24,13 @@ public class MemberDA implements DataAccess<Member>
      */
     private MemberDA() {}
 
-    @Override
     /**
      * function save: save a new member in DB
      * @param member $member
-     * @create a new instance of member in DB type void
+     * create a new instance of member in DB type void
      */
+    @Override
+
     public void save(Member member) throws Exception
     {
         if (member == null)
@@ -52,13 +53,14 @@ public class MemberDA implements DataAccess<Member>
 
     }
 
-    @Override
     /**
      * function update: update the manager in DB
      * @param member $member
      * @param newParams $newParams
-     * @updete DB of Member type void
+     * update DB of Member type void
      */
+    @Override
+
     public void update(Member member, Map<String, String> newParams) throws Exception
     {
         if (member == null || newParams.isEmpty())
@@ -89,12 +91,13 @@ public class MemberDA implements DataAccess<Member>
         }
     }
 
-    @Override
     /**
      * function delete: delete the member from DB
      * @param member $member
-     * @delete Member from DB type void
+     * delete Member from DB type void
      */
+    @Override
+
     public void delete(Member member) throws Exception
     {
         if (member == null)
@@ -146,21 +149,14 @@ public class MemberDA implements DataAccess<Member>
         return null;
     }
 
-//    public List getDataFromRoleTable(String username, String role) throws Exception
-//    {
-//        if(username == null || role == null)
-//        {
-//
-//        }
-//    }
-
-    @Override
     /**
-     * function get : Connects to the database  and return Member object from the DB
+     * function get : Connects to the database and returns a Member object from the DB
      * the function find by keyParams of the Member in DB and return object of hem.
      * @param keyParams $keyParams
      * @return Member
      */
+    @Override
+
     public Member get(Map<String, String> keyParams)
     {
         if (keyParams.isEmpty())

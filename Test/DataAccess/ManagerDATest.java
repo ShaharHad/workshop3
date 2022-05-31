@@ -2,7 +2,6 @@ package DataAccess;
 
 import Domain.Manager;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ManagerDATest
@@ -24,7 +23,6 @@ class ManagerDATest
     Map<String, String> keyParamsMaor;
     Map<String, String> keyParamsNaor;
 
-    //need to add the 2 users below to the DB manually
     @BeforeAll
     public void beforeAll()
     {

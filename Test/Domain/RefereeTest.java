@@ -63,7 +63,7 @@ class RefereeTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -80,7 +80,7 @@ class RefereeTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -97,7 +97,7 @@ class RefereeTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 

@@ -1,8 +1,6 @@
 package DataAccess;
 
 import Domain.Manager;
-import Domain.Member;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,23 +21,25 @@ public class ManagerDA implements DataAccess<Manager>
      */
     private ManagerDA() {}
 
-    @Override
     /**
      * function save: save a new game in DB
      * @param manager $manager
-     * @create a new instance of manager in DB type void
+     * create a new instance of manager in DB type void
      */
+    @Override
+
     public void save(Manager manager) throws Exception {
 
     }
 
-    @Override
     /**
      * function get : Connects to the database  and return Manager object from the DB
      * the function find by keyParams the Manager in DB and return object of hem.
      * @param keyParams $keyParams
      * @return Manager
      */
+    @Override
+
     public Manager get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;
@@ -92,23 +92,25 @@ public class ManagerDA implements DataAccess<Manager>
         return manager;
     }
 
-    @Override
     /**
      * function update: update the manager in DB
      * @param manager $manager
      * @param newParams $newParams
-     * @updete DB of manager type void
+     * update DB of manager type void
      */
+    @Override
+
     public void update(Manager manager, Map<String, String> newParams) throws Exception {
 
     }
 
-    @Override
     /**
      * function delete: delete the manager from DB
      * @param manager $manager
-     * @delete Manager from DB type void
+     * delete Manager from DB type void
      */
+    @Override
+
     public void delete(Manager manager) throws Exception {
 
     }

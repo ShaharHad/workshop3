@@ -1,8 +1,6 @@
 package DataAccess;
 
 import Domain.Member;
-import Domain.Owner;
-import Domain.Referee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

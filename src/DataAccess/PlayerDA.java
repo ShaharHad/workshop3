@@ -1,6 +1,5 @@
 package DataAccess;
 
-import Domain.Manager;
 import Domain.Player;
 
 import java.sql.Connection;
@@ -21,44 +20,49 @@ public class PlayerDA implements DataAccess<Player>{
      * constructor of PlayerDA class
      */
     private PlayerDA() {}
-    @Override
+
     /**
      * function save: save a new player in DB
      * @param player $player
-     * @create a new instance of player in DB type void
+     * create a new instance of player in DB type void
      */
+    @Override
+
     public void save(Player player) throws Exception {
 
     }
 
-    @Override
     /**
      * function update: update the player in DB
      * @param player $player
      * @param newParams $newParams
-     * @updete DB of Player type void
+     * update DB of Player type void
      */
+    @Override
+
     public void update(Player player, Map<String, String> newParams) throws Exception {
 
     }
 
-    @Override
     /**
      * function delete: delete the player from DB
      * @param player $player
-     * @delete Player from DB type void
+     * delete Player from DB type void
      */
+    @Override
+
     public void delete(Player player) throws Exception {
 
     }
 
-    @Override
     /**
      * function get : Connects to the database  and return player object from the DB
      * the function find by keyParams of the player in DB and return object of hem.
      * @param keyParams $keyParams
      * @return Player
      */
+    @Override
+
     public Player get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;

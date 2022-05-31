@@ -1,13 +1,11 @@
 package DataAccess;
 
 import Domain.Coach;
-import Domain.Manager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
@@ -23,9 +21,9 @@ public class CoachDA implements DataAccess<Coach> {
     private CoachDA() {}
 
     @Override
-    /**
-     * function save: save a new coach in DB
-     * @param coach $coach
+    /*
+      function save: save a new coach in DB
+      @param coach $coach
      * @create a new instance of coach in DB type void
      */
     public void save(Coach coach) throws Exception {
@@ -33,9 +31,9 @@ public class CoachDA implements DataAccess<Coach> {
     }
 
     @Override
-    /**
-     * function update: update the coach in DB
-     * @param coach $coach
+    /*
+      function update: update the coach in DB
+      @param coach $coach
      * @param newParams $newParams
      * @updete DB of coach type void
      */
@@ -44,7 +42,7 @@ public class CoachDA implements DataAccess<Coach> {
     }
 
     @Override
-    /**
+    /*
      * function delete: delete the coach from DB
      * @param coach $coach
      * @delete coach from DB type void
@@ -54,7 +52,7 @@ public class CoachDA implements DataAccess<Coach> {
     }
 
     @Override
-    /**
+    /*
      * function get Connects to the database  and return choach object from the DB
      * the function find by keyParams the choach in DB and return object of hem.
      * @param keyParams $keyParams
