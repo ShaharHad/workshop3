@@ -21,7 +21,7 @@ class RepresentativeTest
     Map<String, String> keyParamsRepresentative1;
     Map<String, String> keyParamsRepresentative2;
 
-    //need to add the users below manually
+
     @BeforeAll
     public void beforeAll()
     {
@@ -54,11 +54,7 @@ class RepresentativeTest
             boolean success = r.login(r.getPassword());
             assertTrue(success);
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
+        catch (Exception e) { System.out.println(e.getMessage()); }
     }
 
 
@@ -71,10 +67,7 @@ class RepresentativeTest
             boolean success = r.login(r.getRole());
             assertFalse(success);
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        catch (Exception e) { System.out.println(e.getMessage()); }
     }
 
     @ParameterizedTest
@@ -87,14 +80,12 @@ class RepresentativeTest
             assertFalse(success);
         }
         catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        { assertEquals(e.getMessage(), "One of the parameters is null"); }
     }
 
     @ParameterizedTest
     @MethodSource({"paramsProvider"})
-    void getOwnerFromDBTest(Representative r)
+    void getRepresentative(Representative r)
     {
         Representative representativeDB = Representative.getRepresentativeFromDB(r.getUserName());
         assertEquals(representativeDB.getUserName(), r.getUserName());

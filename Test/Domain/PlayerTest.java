@@ -1,7 +1,6 @@
 package Domain;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -58,7 +57,7 @@ class PlayerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -75,7 +74,7 @@ class PlayerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "user doesn't exist");
         }
     }
 
@@ -106,7 +105,7 @@ class PlayerTest
 
     @ParameterizedTest
     @MethodSource({"paramsProvider"})
-    void getOwnerFromDBTest(Player p)
+    void getPlayerFromDBTest(Player p)
     {
         Player playerDB = Player.getPlayerFromDB(p.getUserName());
         assertEquals(playerDB.getUserName(), p.getUserName());

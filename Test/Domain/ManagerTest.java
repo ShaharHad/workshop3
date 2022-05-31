@@ -54,7 +54,7 @@ class ManagerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -71,7 +71,7 @@ class ManagerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "user doesn't exist");
         }
     }
 

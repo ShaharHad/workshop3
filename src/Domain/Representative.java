@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class Representative extends Member
 {
-    //need to add role for this
     public Representative(String username, String password, String name) {
         super(username, password, name, "representative");
     }
