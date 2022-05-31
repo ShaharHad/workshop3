@@ -4,6 +4,7 @@ import Domain.Game;
 import Domain.Owner;
 import Domain.Team;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,6 +32,8 @@ class GameDATest
 
     Map<String, String> keyParamsEaglesFalcons;
     Map<String, String> keyParamsLiverpoolChelsea;
+
+    Map<String, String> keyParamsCheckRefereeInGame;
 
     @BeforeAll
     void beforeAll()
@@ -91,6 +94,13 @@ class GameDATest
         keyParamsLiverpoolChelsea.put("homeTeam", "Chelsea");
         keyParamsLiverpoolChelsea.put("fieldName", "Stamford Bridge");
         keyParamsLiverpoolChelsea.put("date", "2022-01-02");
+
+        keyParamsCheckRefereeInGame = new HashMap<>();
+        keyParamsCheckRefereeInGame.put("guestTeam", "Eagles");
+        keyParamsCheckRefereeInGame.put("homeTeam", "Falcons");
+        keyParamsCheckRefereeInGame.put("fieldName", "Mercedes-Benz Stadium");
+        keyParamsCheckRefereeInGame.put("date", "2022-11-11");
+
     }
 
     private Stream<Arguments> nullTeamsParam()
@@ -140,8 +150,10 @@ class GameDATest
         Map<String, String> updateEaglesFalcons = new HashMap<>();
         updateEaglesFalcons.put("hour", "11");
         updateEaglesFalcons.put("date", "11-11-2022");
+
         Map<String, String> updateLiverpoolChelsea = new HashMap<>();
         updateLiverpoolChelsea.put("hour", "15");
+
         return Stream.of(
                 Arguments.of(gameEaglesFalcons, updateEaglesFalcons),
                 Arguments.of(gameLiverpoolChelsea, updateLiverpoolChelsea)
@@ -151,6 +163,35 @@ class GameDATest
     @ParameterizedTest
     @MethodSource("gamesUpdateParams")
     void testUpdateGame(Game gameT, Map<String, String> newParamsT)
+    {
+        try {
+            g.update(gameT, newParamsT);
+        } catch (Exception e) {
+            assertEquals("Error connecting to the database", e.getMessage());
+        }
+    }
+
+
+    private Stream<Arguments> gamesRefereeUpdateParams()
+    {
+        Map<String, String> updateEaglesFalcons = new HashMap<>();
+        updateEaglesFalcons.put("referee1UN", "referee1");
+        updateEaglesFalcons.put("referee2UN", "referee2");
+        updateEaglesFalcons.put("mainRefereeUN", "referee3");
+
+
+//        Map<String, String> updateLiverpoolChelsea = new HashMap<>();
+//        updateLiverpoolChelsea.put("hour", "15");
+
+        return Stream.of(
+                Arguments.of(gameEaglesFalcons, updateEaglesFalcons)
+//                Arguments.of(gameLiverpoolChelsea, updateLiverpoolChelsea)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesRefereeUpdateParams")
+    void testUpdateRefereeGame(Game gameT, Map<String, String> newParamsT)
     {
         try {
             g.update(gameT, newParamsT);
@@ -174,6 +215,41 @@ class GameDATest
             g.delete(gameT);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    private Stream<Arguments> gamesWithReferee()
+    {
+        return Stream.of(
+                Arguments.of(keyParamsCheckRefereeInGame)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesWithReferee")
+    void checkRefereeInGame(Map<String, String> map)
+    {
+
+        Game game = g.get(map);
+        if (game == null)
+        {
+            System.out.println("no game found in the system");
+        }
+        else
+        {
+            if(game.getReferee1() != null)
+            {
+                System.out.println(game.getReferee1().getUserName());
+            }
+            if(game.getReferee2() != null)
+            {
+                System.out.println(game.getReferee2().getUserName());
+            }
+            if(game.getMainReferee() != null)
+            {
+                System.out.println(game.getMainReferee().getUserName());
+            }
         }
     }
 }

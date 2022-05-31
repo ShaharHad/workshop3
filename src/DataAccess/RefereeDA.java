@@ -204,4 +204,46 @@ public class RefereeDA implements DataAccess<Referee>
 
         return referee;
     }
+
+    // keyParam contain the date of the game
+    public List<Referee> getAllAvailableReferee(Map<String, String> keyParams) throws Exception
+    {
+        if(keyParams.isEmpty())
+        {
+            return null;
+        }
+        RefereeDA rda = RefereeDA.getInstance();
+        ResultSet rs;
+        Connection conn;
+        conn = getConnector();
+        Map<String, String> map = new HashMap<>();
+        Referee referee;
+        List<Referee> list = new ArrayList<>();
+        String query = "SELECT userName \n" +
+                "FROM javabase.referees\n" +
+                "WHERE NOT EXISTS\n" +
+                "(SELECT *  \n" +
+                "   FROM  javabase.games\n" +
+                "   WHERE ((games.mainRefereeUN = referees.userName) or (games.referee1UN = referees.userName) or (games.referee2UN = referees.userName))\n" +
+                "   and games.date=?);";
+        PreparedStatement preparedStmt;
+        try
+        {
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, keyParams.get("date"));
+            rs = preparedStmt.executeQuery();
+            while (rs.next())
+            {
+                map.put("userName", rs.getString("userName"));
+                referee = rda.get(map);
+                list.add(referee);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new Exception("issue with DB");
+        }
+        return list;
+    }
+
 }

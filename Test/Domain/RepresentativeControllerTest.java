@@ -3,11 +3,16 @@ package Domain;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,5 +87,72 @@ class RepresentativeControllerTest
         Status status = rpc.updateGame(gameDB, newParams);
         assertEquals(status, Status.Failure);
     }
+
+
+
+
+    private Stream<Arguments> nullParam()
+    {
+        Game gameDB = rpc.searchGame(teamArsenal, teamBarcelona, "Camp Nou", sqlDate);
+        return Stream.of(
+                Arguments.of(null, null),
+                Arguments.of(gameDB, null)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"nullParam"})
+    void assignEmptyParamTest(Game game, List<Referee> lst)
+    {
+        Status status = rpc.assignRefsToGame(game, lst);
+        assertEquals(status, Status.Failure);
+    }
+
+
+    private Stream<Arguments> paramsProvider()
+    {
+        Map<String, String> mReferee1 = new HashMap<>();
+        mReferee1.put("referee1UN", "referee1");
+        Map<String, String> mReferee2 = new HashMap<>();
+        mReferee2.put("referee2UN", "referee2");
+        Map<String, String> mMainReferee = new HashMap<>();
+        mMainReferee.put("mainRefereeUN", "referee4");
+        return Stream.of(
+                Arguments.of(mReferee1),
+                Arguments.of(mReferee2),
+                Arguments.of(mMainReferee)
+        );
+    }
+
+
+
+
+    @ParameterizedTest
+    @MethodSource({"paramsProvider"})
+    void removeRefFromGameSuccessTest(Map<String, String> m)
+    {
+        Game gameDB = rpc.searchGame(teamArsenal, teamBarcelona, "Camp Nou", sqlDate);
+        assertNotNull(gameDB);
+        Status status = rpc.removeRefFromGame(gameDB, m);
+        assertEquals(status, Status.Success);
+    }
+
+
+    @Test
+    void assignRefsToGameTest()
+    {
+        Game gameDB = rpc.searchGame(teamArsenal, teamBarcelona, "Camp Nou", sqlDate);
+        assertNotNull(gameDB);
+        List<Referee> list = rpc.searchAvailableReferee(sqlDate);
+        Status status = rpc.assignRefsToGame(gameDB, list);
+        assertEquals(status, Status.Success);
+
+        list = rpc.searchAvailableReferee(sqlDate);
+        status = rpc.assignRefsToGame(gameDB, list);
+        assertEquals(status, Status.Failure);
+    }
+
+
+
 
 }

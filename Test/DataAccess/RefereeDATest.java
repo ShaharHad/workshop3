@@ -1,14 +1,23 @@
 package DataAccess;
 
 
+import Domain.Game;
+import Domain.Owner;
 import Domain.Referee;
+import Domain.Team;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.sql.Ref;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -18,6 +27,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RefereeDATest
 {
+    ////////////////////////////////////////////
+    Referee referee3;
+    Referee referee4;
+    Referee referee5;
+    Referee referee6;
+    Map<String, String> keyParamsReferee;
+    Owner guestOwnerEagles;
+    Team guestTeamEagles;
+    Owner homeOwnerFalcons;
+    Team homeTeamFalcons;
+    Game gameEaglesFalcons;
+
+
+
+
+
+
+    ///////////////////////////////////////////
+
     Referee refereeLeah;
     Referee refereeMaxim;
     RefereeDA r = RefereeDA.getInstance();
@@ -29,8 +57,7 @@ class RefereeDATest
     Map<String, String> updateParamsEmpty;
 
     @BeforeAll
-    public void beforeAll()
-    {
+    public void beforeAll() throws Exception {
         refereeLeah = new Referee("leahma", "12345Q", "", "Grade 8");
         refereeMaxim = new Referee("maxi2", "5g5gT", "maxim", "");
         keyParamsLeah = new HashMap<>();
@@ -44,6 +71,35 @@ class RefereeDATest
         updateParamsLeah.put("name", "leah");
         updateParamsLeah.put("training", "Grade 6");
         updateParamsMaxim.put("training", "Grade 1");
+
+
+        keyParamsReferee = new HashMap<>();
+        referee3 = new Referee("referee3", "referee3", "referee3", "Grade 8");
+        referee4 = new Referee("referee4", "referee4", "referee4", "");
+        referee5 = new Referee("referee5", "referee5", "referee5", "Grade 8");
+        referee6 = new Referee("referee6", "referee6", "referee6", "");
+        keyParamsReferee.put("date", "2021-01-01");
+
+        guestOwnerEagles = new Owner("Jeff123", "eagles4Ev", "Jeffrey Lurie", "Eagles");
+        try {
+            guestTeamEagles = new Team(guestOwnerEagles, "Eagles", "Lincoln Financial Field");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        homeOwnerFalcons = new Owner("artyBl", "falconsRule", "Arthur Blank", "Falcons");
+        try {
+            homeTeamFalcons = new Team(homeOwnerFalcons, "Falcons", "Mercedes-Benz Stadium");
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        try {
+            gameEaglesFalcons = new Game(guestTeamEagles, homeTeamFalcons);
+        } catch(Exception e) { assertEquals(e.getMessage(), "one of the params is null!"); }
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            java.util.Date utilDate = format.parse("12-09-2021");
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            gameEaglesFalcons.setDate(sqlDate);
+        } catch (
+                ParseException e) { System.out.println(e.getMessage()); }
+        gameEaglesFalcons.setField("Mercedes-Benz Stadium");
+
     }
 
     private Stream<Arguments> noRefereeParams()
@@ -173,6 +229,39 @@ class RefereeDATest
         }
     }
 
+    @Test
+    void getAllAvailableRefereeTest()
+    {
+        RefereeDA rda = RefereeDA.getInstance();
+        List<Referee> list = new ArrayList<>();
+        try
+        {
+            list = rda.getAllAvailableReferee(keyParamsReferee);
+            assert list.size() > 0;
+
+        }
+        catch (Exception e)
+        {
+            assert list.size() > 0;
+        }
+    }
+
+    @Test
+    void getAllAvailableRefereeNullTest()
+    {
+        RefereeDA rda = RefereeDA.getInstance();
+        List<Referee> list = new ArrayList<>();
+        try
+        {
+            list = rda.getAllAvailableReferee(new HashMap<>());
+            assertNull(list);
+
+        }
+        catch (Exception e)
+        {
+            assertNull(list);
+        }
+    }
 
 
 }

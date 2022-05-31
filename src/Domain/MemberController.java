@@ -26,35 +26,44 @@ public class MemberController
             map.put("userName", username);
             Member m = mda.get(map);
             boolean success = false;
-            switch (m.getRole()) {
-                case "representative":
-                    Representative rep = new Representative(m.getUserName(), m.getPassword(), m.getName());
-                    success = rep.login(password);
-                    break;
-                case "referee":
-                    Referee ref = Referee.getRefFromDB(m.getUserName());
-                    success = ref.login(username, password);
-                    break;
-                case "player":
-                    Player p = Player.getPlayerFromDB(m.getUserName());
-                    success = p.login(username, password);
-                    break;
-                case "owner":
-                    Owner o = Owner.getOwnerFromDB(m.getUserName());
-                    success = o.login(username, password);
-                    break;
-                case "manager":
-                    Manager manager = Manager.getManagerFromDB(m.getUserName());
-                    success = manager.login(username, password);
-                    break;
-                case "fan":
-                    Fan fan = new Fan(m.getUserName(), m.getPassword(), m.getName());
-                    success = fan.login(password);
-                    break;
-                case "coach":
-                    Coach coach = Coach.getCoachFromDB(m.getUserName());
-                    success = coach.login(username, password);
-                    break;
+            if (m.getRole().equals("representative"))
+            {
+                Representative rep = new Representative(m.getUserName(), m.getPassword(), m.getName());
+                success = rep.login(password);
+            }
+            else if(m.getRole().equals("referee"))
+            {
+                Referee ref = Referee.getRefFromDB(m.getUserName());
+                success = ref.login(username, password);
+            }
+            else if(m.getRole().equals("player"))
+            {
+                Player p = Player.getPlayerFromDB(m.getUserName());
+                success = p.login(username, password);
+            }
+
+            else if(m.getRole().equals("owner"))
+            {
+                Owner o = Owner.getOwnerFromDB(m.getUserName());
+                success = o.login(username, password);
+            }
+
+            else if(m.getRole().equals("manager"))
+            {
+                Manager manager = Manager.getManagerFromDB(m.getUserName());
+                success = manager.login(username, password);
+            }
+
+            else if(m.getRole().equals("fan"))
+            {
+                Fan fan = new Fan(m.getUserName(), m.getPassword(), m.getName());
+                success = fan.login(password);
+            }
+
+            else if(m.getRole().equals("coach"))
+            {
+                Coach coach = Coach.getCoachFromDB(m.getUserName());
+                success = coach.login(username, password);
             }
             if(success)
             {
