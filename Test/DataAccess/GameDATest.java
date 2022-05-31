@@ -180,13 +180,8 @@ class GameDATest
         updateEaglesFalcons.put("referee2UN", "referee2");
         updateEaglesFalcons.put("mainRefereeUN", "referee3");
 
-
-//        Map<String, String> updateLiverpoolChelsea = new HashMap<>();
-//        updateLiverpoolChelsea.put("hour", "15");
-
         return Stream.of(
                 Arguments.of(gameEaglesFalcons, updateEaglesFalcons)
-//                Arguments.of(gameLiverpoolChelsea, updateLiverpoolChelsea)
         );
     }
 

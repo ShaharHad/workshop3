@@ -8,15 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ucFunctionsTest
@@ -33,7 +31,7 @@ class ucFunctionsTest
     void beforeAll()
     {
 
-        ownerBarcelona = new Owner("joanGG", "Var123", "Joan Gamper", "Barcelona");
+        ownerBarcelona = new Owner("joanGG", "Bar123", "Joan Gamper", "Barcelona");
         try
         {
             teamBarcelona = new Team(ownerBarcelona, "Barcelona", "Camp Nou");
@@ -118,7 +116,6 @@ class ucFunctionsTest
                 Arguments.of(mMainReferee)
         );
     }
-
 
 
     @ParameterizedTest

@@ -125,8 +125,6 @@ class RepresentativeControllerTest
     }
 
 
-
-
     @ParameterizedTest
     @MethodSource({"paramsProvider"})
     void removeRefFromGameSuccessTest(Map<String, String> m)
