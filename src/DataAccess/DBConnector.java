@@ -1,7 +1,7 @@
 package DataAccess;
 import java.sql.*;
 
-
+//**Connector class of the database, A department responsible for connecting to the data structure*/
 class DBConnector
 {
     public static final String URL = "jdbc:mysql://localhost:3306/javabase";
@@ -12,9 +12,14 @@ class DBConnector
 
     //private constructor to avoid client applications to use constructor
     public static DBConnector getInstance(){ return instance; }
-
+    /**
+     * constructor of  DBConnector class
+     */
     private DBConnector() { }
-
+    /**
+     * function getConnector
+     * @return Connection to database type Connection
+     */
     public static Connection getConnector()
     {
         try

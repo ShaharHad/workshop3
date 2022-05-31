@@ -24,8 +24,12 @@ public class Game
     Referee referee2;
     Referee mainReferee;
 
-    public Game(Team guestGroup, Team homeGroup) throws Exception
-    {
+    /**
+     * constructor of Game class
+     * @param guestGroup $guestGroup
+     * @param homeGroup  $homeGroup
+     */
+    public Game(Team guestGroup, Team homeGroup) throws Exception {
         if (guestGroup == null || homeGroup == null)
             throw new Exception("one of the params is null!");
         this.guestGroup = guestGroup;
@@ -61,74 +65,155 @@ public class Game
         this.mainReferee = mainReferee;
     }
 
+    /**
+     * function getDate
+     *
+     * @return date of Game type java.sql.Date
+     */
     public java.sql.Date getDate() {
         return date;
     }
 
+    /**
+     * function getHour
+     * @return hour of Game type int
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * function getGuestGroup
+     * @return guestGroup of Game type Team
+     */
     public Team getGuestGroup() {
         return guestGroup;
     }
 
+    /**
+     * function getHomeGroup
+     * @return homeGroup of Game type Team
+     */
     public Team getHomeGroup() {
         return homeGroup;
     }
 
+    /**
+     * function setGuestGroup
+     * @param guestGroup $guestGroup
+     * @update guestGroup of Game type void
+     */
     public void setGuestGroup(Team guestGroup) {
         this.guestGroup = guestGroup;
     }
 
+    /**
+     * function setHomeGroup
+     * @param homeGroup $homeGroup
+     * @update homeGroup of Game type void
+     */
     public void setHomeGroup(Team homeGroup) {
         this.homeGroup = homeGroup;
     }
 
+    /**
+     * function getField
+     * @return getField of Game type String
+     */
     public String getField() {
         return field;
     }
 
+    /**
+     * function getScore
+     * @return getScore of Game type int
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * function getEventLog
+     * @return eventLog of Game type EventLog
+     */
     public EventLog getEventLog() {
         return eventLog;
     }
 
+    /**
+     * function setEventLogID
+     * @updete eventLogID of Game type void
+     */
     public void setEventLogID(int eventLogID) {
         this.eventLog.setID(eventLogID);
     }
 
+    /**
+     * function getSeasonID
+     * @return seasonID of Game type int
+     */
     public int getSeasonID() {
         return seasonID;
     }
 
+    /**
+     * function getLeagueID
+     * @return LeagueID of Game type int
+     */
     public int getLeagueID() {
         return LeagueID;
     }
 
+    /**
+     * function setDate
+     * @param date $date
+     * @updete this.date of Game type void
+     */
     public void setDate(Date date) {
         this.date = date;
     }
 
+    /**
+     * function setHour
+     * @param hour $hour
+     * @updete this.hour of Game type void
+     */
     public void setHour(int hour) {
         this.hour = hour;
     }
 
+    /**
+     * function setField
+     * @param field $field
+     * @updete this.hour of Game type void
+     */
     public void setField(String field) {
         this.field = field;
     }
 
+    /**
+     * function setScore
+     * @param score $score
+     * @updete this.score of Game type void
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
+    /**
+     * function setSeasonID
+     * @param seasonID $seasonID
+     * @updete this.seasonID of Game type void
+     */
     public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
     }
 
+    /**
+     * function setLeagueID
+     * @param leagueID $leagueID
+     * @updete LeagueID of Game type void
+     */
     public void setLeagueID(int leagueID) {
         LeagueID = leagueID;
     }
@@ -136,14 +221,4 @@ public class Game
     public int getHour(int hourRS) {
         return this.hour;
     }
-
-//    static Game getGameFromDB(String field, String hour, String date)
-//    {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("fieldName", field);
-//        map.put("hour", hour);
-//        map.put("date", date);
-//        GameDA gda = GameDA.getInstance();
-//        return gda.get(map);
-//    }
 }

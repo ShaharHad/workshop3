@@ -8,17 +8,31 @@ import java.util.Map;
 public class Owner extends Member
 {
     String teamName;
-
+    /**
+     * constructor of Owner class -extends Member
+     * @param username $username
+     * @param password $password
+     * @param name $name
+     * @param teamName $teamName
+     */
     public Owner(String username, String password, String name, String teamName)
     {
         super(username, password, name, "owner");
         this.teamName = teamName;
     }
-
+    /**
+     * function getTeamName
+     * @return String $this.teamName
+     */
     public String getTeamName() {
         return this.teamName;
     }
-
+    /**
+     * function get Checks what type of field is the key and returns
+     * the relevant field of the owner accordingly
+     * @param key $key
+     * @return String key
+     */
     public String get(String key)
     {
         if (key == null)
@@ -45,7 +59,15 @@ public class Owner extends Member
         }
 
     }
-
+    /**
+     * function login Checks if the user can make a connection it's mean:
+     * 1. Check the correctness of username and password
+     * 2. Checks whether the user is registered as a owner in the system
+     * Return true if both conditions are met otherwise return false
+     * @param username $username
+     * @param password $password
+     * @return boolean
+     */
     public boolean login(String username, String password) throws Exception
     {
         if (username == null || password == null) {
@@ -63,7 +85,12 @@ public class Owner extends Member
         }
     }
 
-
+    /**
+     * function getOwnerFromDB return Owner object from the DB
+     * the function find by username the Owner in DB and return object of hem.
+     * @param username $username
+     * @return Owner
+     */
     static Owner getOwnerFromDB(String username)
     {
         Map<String, String> map = new HashMap<>();

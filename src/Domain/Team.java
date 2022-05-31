@@ -10,7 +10,12 @@ public class Team
     ArrayList<Owner> owners;
     String teamName;
     String field;
-
+    /**
+     * constructor of  Coach class
+     * @param owner $owner
+     * @param teamName $teamName
+     * @param field $field
+     */
     public Team(Owner owner, String teamName, String field) throws Exception
     {
         if (owner == null || teamName == null || field == null)
@@ -23,7 +28,10 @@ public class Team
         this.coaches = new ArrayList<>();
         this.managers = new ArrayList<>();
     }
-
+    /**
+     * function getTeamName
+     * @return $teamName type String
+     */
     public String getTeamName() {
         return teamName;
     }

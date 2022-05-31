@@ -20,9 +20,17 @@ public class GameDA implements DataAccess<Game>
 
     //private constructor to avoid client applications to use constructor
     public static GameDA getInstance() { return instance; }
+    /**
+     * constructor of  GameDA class
+     */
     private GameDA() {}
 
     @Override
+    /**
+     * function save: save a new game in DB
+     * @param game $game
+     * @create a new instance of game in DB type void
+     */
     public void save(Game game) throws Exception
     {
         if (game == null || game.getHomeGroup() == null || game.getGuestGroup() == null)
@@ -59,6 +67,12 @@ public class GameDA implements DataAccess<Game>
     }
 
     @Override
+    /**
+     * function update: update the game in DB
+     * @param game $game
+     * @param newParams $newParams
+     * @updete DB of coach type void
+     */
     public void update(Game game, Map<String, String> newParams) throws Exception
     {
         if (game == null || newParams.isEmpty())
@@ -112,6 +126,11 @@ public class GameDA implements DataAccess<Game>
     }
 
     @Override
+    /**
+     * function delete: delete the game from DB
+     * @param game $game
+     * @delete coach from DB type void
+     */
     public void delete(Game game) throws Exception
     {
         if (game == null)
@@ -140,6 +159,12 @@ public class GameDA implements DataAccess<Game>
 
 
     @Override
+    /**
+     * function get Connects to the database  and return Game object from the DB
+     * the function find by keyParams the Game in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Game
+     */
     public Game get(Map<String, String> keyParams)
     {
         ResultSet rs;

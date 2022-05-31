@@ -17,24 +17,49 @@ public class CoachDA implements DataAccess<Coach> {
 
     //private constructor to avoid client applications to use constructor
     public static CoachDA getInstance() { return instance; }
+    /**
+     * constructor of CoachDA class
+     */
     private CoachDA() {}
 
     @Override
+    /**
+     * function save: save a new coach in DB
+     * @param coach $coach
+     * @create a new instance of coach in DB type void
+     */
     public void save(Coach coach) throws Exception {
 
     }
 
     @Override
+    /**
+     * function update: update the coach in DB
+     * @param coach $coach
+     * @param newParams $newParams
+     * @updete DB of coach type void
+     */
     public void update(Coach coach, Map<String, String> newParams) throws Exception {
 
     }
 
     @Override
+    /**
+     * function delete: delete the coach from DB
+     * @param coach $coach
+     * @delete coach from DB type void
+     */
     public void delete(Coach coach) throws Exception {
 
     }
 
     @Override
+    /**
+     * function get Connects to the database  and return choach object from the DB
+     * the function find by keyParams the choach in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Coach
+     */
     public Coach get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;

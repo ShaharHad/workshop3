@@ -17,9 +17,17 @@ public class RefereeDA implements DataAccess<Referee>
 
     //private constructor to avoid client applications to use constructor
     public static RefereeDA getInstance() { return instance; }
+    /**
+     * constructor of RefereeDA class
+     */
     private RefereeDA() {}
 
     @Override
+    /**
+     * function save: save a new referee in DB
+     * @param referee $referee
+     * @create a new instance of referee in DB type void
+     */
     public void save(Referee referee) throws Exception
     {
         if (referee == null)
@@ -51,6 +59,12 @@ public class RefereeDA implements DataAccess<Referee>
     }
 
     @Override
+    /**
+     * function update: update the player in DB
+     * @param referee $referee
+     * @param newParams $newParams
+     * @updete DB of referee type void
+     */
     public void update(Referee referee, Map<String, String> newParams) throws Exception
     {
         if (referee == null || newParams.isEmpty())
@@ -113,6 +127,11 @@ public class RefereeDA implements DataAccess<Referee>
     }
 
     @Override
+    /**
+     * function delete: delete the referee from DB
+     * @param referee $referee
+     * @delete Referee from DB type void
+     */
     public void delete(Referee referee) throws Exception
     {
         if (referee == null)
@@ -139,7 +158,12 @@ public class RefereeDA implements DataAccess<Referee>
         preparedStmt2.execute();
         conn.close();
     }
-
+    /**
+     * function getTableFromRole : get roleRS and Returns the name of relevant member table
+     * (In this case you will return "referee")
+     * @param roleRS $roleRS
+     * @return String
+     */
     private String getTableFromRole(String roleRS)
     {
         for (tableNames table : tableNames.values())
@@ -153,6 +177,12 @@ public class RefereeDA implements DataAccess<Referee>
     }
 
     @Override
+    /**
+     * function get : Connects to the database  and return Referee object from the DB
+     * the function find by keyParams of the referee in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Referee
+     */
     public Referee get(Map<String, String> keyParams)
     {
         for (String val : keyParams.values())

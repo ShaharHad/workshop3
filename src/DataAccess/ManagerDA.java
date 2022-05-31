@@ -18,14 +18,28 @@ public class ManagerDA implements DataAccess<Manager>
 
     //private constructor to avoid client applications to use constructor
     public static ManagerDA getInstance() { return instance; }
+    /**
+     * constructor of ManagerDA class
+     */
     private ManagerDA() {}
 
     @Override
+    /**
+     * function save: save a new game in DB
+     * @param manager $manager
+     * @create a new instance of manager in DB type void
+     */
     public void save(Manager manager) throws Exception {
 
     }
 
     @Override
+    /**
+     * function get : Connects to the database  and return Manager object from the DB
+     * the function find by keyParams the Manager in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Manager
+     */
     public Manager get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;
@@ -79,11 +93,22 @@ public class ManagerDA implements DataAccess<Manager>
     }
 
     @Override
+    /**
+     * function update: update the manager in DB
+     * @param manager $manager
+     * @param newParams $newParams
+     * @updete DB of manager type void
+     */
     public void update(Manager manager, Map<String, String> newParams) throws Exception {
 
     }
 
     @Override
+    /**
+     * function delete: delete the manager from DB
+     * @param manager $manager
+     * @delete Manager from DB type void
+     */
     public void delete(Manager manager) throws Exception {
 
     }

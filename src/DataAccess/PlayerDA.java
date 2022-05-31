@@ -17,23 +17,48 @@ public class PlayerDA implements DataAccess<Player>{
 
     //private constructor to avoid client applications to use constructor
     public static PlayerDA getInstance() { return instance; }
+    /**
+     * constructor of PlayerDA class
+     */
     private PlayerDA() {}
     @Override
+    /**
+     * function save: save a new player in DB
+     * @param player $player
+     * @create a new instance of player in DB type void
+     */
     public void save(Player player) throws Exception {
 
     }
 
     @Override
+    /**
+     * function update: update the player in DB
+     * @param player $player
+     * @param newParams $newParams
+     * @updete DB of Player type void
+     */
     public void update(Player player, Map<String, String> newParams) throws Exception {
 
     }
 
     @Override
+    /**
+     * function delete: delete the player from DB
+     * @param player $player
+     * @delete Player from DB type void
+     */
     public void delete(Player player) throws Exception {
 
     }
 
     @Override
+    /**
+     * function get : Connects to the database  and return player object from the DB
+     * the function find by keyParams of the player in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Player
+     */
     public Player get(Map<String, String> keyParams) {
         if (keyParams.isEmpty())
             return null;

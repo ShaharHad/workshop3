@@ -1,7 +1,7 @@
 package DataAccess;
 
 import java.util.Map;
-
+//**DataAccess interface    *//
 public interface DataAccess<T>
 {
     void save(T t) throws Exception;

@@ -19,9 +19,17 @@ public class MemberDA implements DataAccess<Member>
 
     //private constructor to avoid client applications to use constructor
     public static MemberDA getInstance() { return instance; }
+    /**
+     * constructor of MemberDA class
+     */
     private MemberDA() {}
 
     @Override
+    /**
+     * function save: save a new member in DB
+     * @param member $member
+     * @create a new instance of member in DB type void
+     */
     public void save(Member member) throws Exception
     {
         if (member == null)
@@ -45,6 +53,12 @@ public class MemberDA implements DataAccess<Member>
     }
 
     @Override
+    /**
+     * function update: update the manager in DB
+     * @param member $member
+     * @param newParams $newParams
+     * @updete DB of Member type void
+     */
     public void update(Member member, Map<String, String> newParams) throws Exception
     {
         if (member == null || newParams.isEmpty())
@@ -76,6 +90,11 @@ public class MemberDA implements DataAccess<Member>
     }
 
     @Override
+    /**
+     * function delete: delete the member from DB
+     * @param member $member
+     * @delete Member from DB type void
+     */
     public void delete(Member member) throws Exception
     {
         if (member == null)
@@ -105,7 +124,11 @@ public class MemberDA implements DataAccess<Member>
         }
         catch (Exception e) { System.out.println("problem in delete function"); }
     }
-
+    /**
+     * function getTableFromRole : get roleRS and Returns the name of the relevant member table
+     * @param roleRS $roleRS
+     * @return String
+     */
     private String getTableFromRole(String roleRS) throws Exception
     {
         if (roleRS == null)
@@ -132,6 +155,12 @@ public class MemberDA implements DataAccess<Member>
 //    }
 
     @Override
+    /**
+     * function get : Connects to the database  and return Member object from the DB
+     * the function find by keyParams of the Member in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Member
+     */
     public Member get(Map<String, String> keyParams)
     {
         if (keyParams.isEmpty())

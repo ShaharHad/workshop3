@@ -15,9 +15,17 @@ public class OwnerDA implements DataAccess<Owner>
 
     //private constructor to avoid client applications to use constructor
     public static OwnerDA getInstance() { return instance; }
+    /**
+     * constructor of OwnerDA class
+     */
     private OwnerDA() {}
 
     @Override
+    /**
+     * function save: save a new owner in DB
+     * @param owner $owner
+     * @create a new instance of owner in DB type void
+     */
     public void save(Owner owner) throws Exception
     {
         if (owner == null)
@@ -47,6 +55,12 @@ public class OwnerDA implements DataAccess<Owner>
     }
 
     @Override
+    /**
+     * function update: update the owner in DB
+     * @param owner $owner
+     * @param newParams $newParams
+     * @updete DB of Owner type void
+     */
     public void update(Owner owner, Map<String, String> newParams) throws Exception
     {
         if (owner == null || newParams.isEmpty())
@@ -109,6 +123,11 @@ public class OwnerDA implements DataAccess<Owner>
     }
 
     @Override
+    /**
+     * function delete: delete the owner from DB
+     * @param owner $owner
+     * @delete Owner from DB type void
+     */
     public void delete(Owner owner) throws Exception
     {
         if (owner == null)
@@ -118,6 +137,7 @@ public class OwnerDA implements DataAccess<Owner>
         Connection conn;
         conn = getConnector();
         try
+
         {
             table = getTableFromRole(roleRS);
             if (table != null)
@@ -137,7 +157,11 @@ public class OwnerDA implements DataAccess<Owner>
         }
         catch (Exception e) { System.out.println("problem in delete function"); }
     }
-
+    /**
+     * function getTableFromRole : get roleRS and Returns the name of relevant member table
+     * @param roleRS $roleRS
+     * @return String
+     */
     private String getTableFromRole(String roleRS)
     {
         if (roleRS == null)
@@ -153,6 +177,12 @@ public class OwnerDA implements DataAccess<Owner>
     }
 
     @Override
+    /**
+     * function get : Connects to the database  and return Owner object from the DB
+     * the function find by keyParams of the Owner in DB and return object of hem.
+     * @param keyParams $keyParams
+     * @return Owner
+     */
     public Owner get(Map<String, String> keyParams)
     {
         ResultSet rs;
