@@ -147,6 +147,7 @@ class RepresentativeControllerTest
         Status status = rpc.assignRefsToGame(gameDB, list);
         assertEquals(status, Status.Success);
 
+        // if we dont assign any referee to game we get status failure
         list = rpc.searchAvailableReferee(sqlDate);
         status = rpc.assignRefsToGame(gameDB, list);
         assertEquals(status, Status.Failure);

@@ -2,6 +2,7 @@ package DataAccess;
 
 import Domain.Game;
 import Domain.Owner;
+import Domain.Referee;
 import Domain.Team;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -238,17 +239,27 @@ class GameDATest
         }
         else
         {
+            RefereeDA rda = RefereeDA.getInstance();
+            Map<String, String> referee1InGame = new HashMap<>();
+            Map<String, String> referee2InGame = new HashMap<>();
+            Map<String, String> mainRefereeInGame = new HashMap<>();
+            referee1InGame.put("userName", "referee1");
+            referee2InGame.put("userName", "referee2");
+            mainRefereeInGame.put("userName", "referee3");
             if(game.getReferee1() != null)
             {
-                System.out.println(game.getReferee1().getUserName());
+                Referee ref1 = rda.get(referee1InGame);
+                assertEquals(ref1.getUserName(), "referee1");
             }
             if(game.getReferee2() != null)
             {
-                System.out.println(game.getReferee2().getUserName());
+                Referee ref2 = rda.get(referee2InGame);
+                assertEquals(ref2.getUserName(), "referee2");
             }
             if(game.getMainReferee() != null)
             {
-                System.out.println(game.getMainReferee().getUserName());
+                Referee mainRef = rda.get(mainRefereeInGame);
+                assertEquals(mainRef.getUserName(), "referee3");
             }
         }
     }

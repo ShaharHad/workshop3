@@ -73,17 +73,6 @@ public class RepresentativeController
         return Status.Success;
     }
 
-//    public Status assignRefToGame(Team homeTeam, Team guestTeam, String fieldName, Date date) throws Exception
-//    {
-//        if (homeTeam == null || guestTeam == null || fieldName == null || date == null )
-//        {
-//            throw new Exception("at least one of the parameters is null");
-//        }
-//        RepresentativeController rc = RepresentativeController.getInstance();
-//        Game game = rc.searchGame(homeTeam, guestTeam, fieldName, date);
-//        List<Referee> =
-//        return Status.Success;
-//    }
 
     public List<Referee> searchAvailableReferee(Date date)
     {

@@ -270,7 +270,6 @@ public class GameDA implements DataAccess<Game>
             owner = new Owner(member.getUserName(), member.getPassword(), member.getName(), homeTeamRS);
             guestTeam = new Team(owner, guestTeamRS, homeFieldRS);
 
-            /////////////////////////////////////////////////////////////////////////////////////
             if(referee1RS != null)
             {
                 preparedStmt = conn.prepareStatement(queryMembers);
@@ -361,7 +360,6 @@ public class GameDA implements DataAccess<Game>
                 }
             }
 
-            //////////////////////////////////////////////////////////////////////////////////////////////
 
 
             game = new Game(guestTeam, homeTeam);
