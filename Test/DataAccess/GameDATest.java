@@ -2,8 +2,10 @@ package DataAccess;
 
 import Domain.Game;
 import Domain.Owner;
+import Domain.Referee;
 import Domain.Team;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,6 +33,8 @@ class GameDATest
 
     Map<String, String> keyParamsEaglesFalcons;
     Map<String, String> keyParamsLiverpoolChelsea;
+
+    Map<String, String> keyParamsCheckRefereeInGame;
 
     @BeforeAll
     void beforeAll()
@@ -91,6 +95,13 @@ class GameDATest
         keyParamsLiverpoolChelsea.put("homeTeam", "Chelsea");
         keyParamsLiverpoolChelsea.put("fieldName", "Stamford Bridge");
         keyParamsLiverpoolChelsea.put("date", "2022-01-02");
+
+        keyParamsCheckRefereeInGame = new HashMap<>();
+        keyParamsCheckRefereeInGame.put("guestTeam", "Eagles");
+        keyParamsCheckRefereeInGame.put("homeTeam", "Falcons");
+        keyParamsCheckRefereeInGame.put("fieldName", "Mercedes-Benz Stadium");
+        keyParamsCheckRefereeInGame.put("date", "2022-11-11");
+
     }
 
     private Stream<Arguments> nullTeamsParam()
@@ -140,8 +151,10 @@ class GameDATest
         Map<String, String> updateEaglesFalcons = new HashMap<>();
         updateEaglesFalcons.put("hour", "11");
         updateEaglesFalcons.put("date", "11-11-2022");
+
         Map<String, String> updateLiverpoolChelsea = new HashMap<>();
         updateLiverpoolChelsea.put("hour", "15");
+
         return Stream.of(
                 Arguments.of(gameEaglesFalcons, updateEaglesFalcons),
                 Arguments.of(gameLiverpoolChelsea, updateLiverpoolChelsea)
@@ -151,6 +164,30 @@ class GameDATest
     @ParameterizedTest
     @MethodSource("gamesUpdateParams")
     void testUpdateGame(Game gameT, Map<String, String> newParamsT)
+    {
+        try {
+            g.update(gameT, newParamsT);
+        } catch (Exception e) {
+            assertEquals("Error connecting to the database", e.getMessage());
+        }
+    }
+
+
+    private Stream<Arguments> gamesRefereeUpdateParams()
+    {
+        Map<String, String> updateEaglesFalcons = new HashMap<>();
+        updateEaglesFalcons.put("referee1UN", "referee1");
+        updateEaglesFalcons.put("referee2UN", "referee2");
+        updateEaglesFalcons.put("mainRefereeUN", "referee3");
+
+        return Stream.of(
+                Arguments.of(gameEaglesFalcons, updateEaglesFalcons)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesRefereeUpdateParams")
+    void testUpdateRefereeGame(Game gameT, Map<String, String> newParamsT)
     {
         try {
             g.update(gameT, newParamsT);
@@ -174,6 +211,51 @@ class GameDATest
             g.delete(gameT);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    private Stream<Arguments> gamesWithReferee()
+    {
+        return Stream.of(
+                Arguments.of(keyParamsCheckRefereeInGame)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("gamesWithReferee")
+    void checkRefereeInGame(Map<String, String> map)
+    {
+
+        Game game = g.get(map);
+        if (game == null)
+        {
+            System.out.println("no game found in the system");
+        }
+        else
+        {
+            RefereeDA rda = RefereeDA.getInstance();
+            Map<String, String> referee1InGame = new HashMap<>();
+            Map<String, String> referee2InGame = new HashMap<>();
+            Map<String, String> mainRefereeInGame = new HashMap<>();
+            referee1InGame.put("userName", "referee1");
+            referee2InGame.put("userName", "referee2");
+            mainRefereeInGame.put("userName", "referee3");
+            if(game.getReferee1() != null)
+            {
+                Referee ref1 = rda.get(referee1InGame);
+                assertEquals(ref1.getUserName(), "referee1");
+            }
+            if(game.getReferee2() != null)
+            {
+                Referee ref2 = rda.get(referee2InGame);
+                assertEquals(ref2.getUserName(), "referee2");
+            }
+            if(game.getMainReferee() != null)
+            {
+                Referee mainRef = rda.get(mainRefereeInGame);
+                assertEquals(mainRef.getUserName(), "referee3");
+            }
         }
     }
 }

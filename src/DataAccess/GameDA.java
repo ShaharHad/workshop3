@@ -2,10 +2,10 @@ package DataAccess;
 
 import Domain.Game;
 import Domain.Owner;
+import Domain.Referee;
 import Domain.Team;
 
 import java.sql.*;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -151,6 +151,10 @@ public class GameDA implements DataAccess<Game>
         String queryTeams = "select * from javabase." + tableNames.teams + " where teamName = ?";
         String queryOwners = "select * from javabase." + tableNames.owners + " where userName = ?";
         String queryMembers = "select * from javabase." + tableNames.members + " where userName = ?";
+
+
+        String queryReferees = "select * from javabase." + tableNames.referees + " where userName = ?"; /////////////
+
         PreparedStatement preparedStmt;
         String homeTeamName = keyParams.get("homeTeam"), homeTeamRS = "";
         String guestTeamName = keyParams.get("guestTeam"), guestTeamRS = "";
@@ -162,6 +166,12 @@ public class GameDA implements DataAccess<Game>
         MemberData member = null;
         Date dateRS = null;
         String ownerName = "", userNameRS = "";
+
+        String referee1RS = null, referee2RS = null, mainRefereeRS = null;
+        Referee referee1 = null, referee2 = null, mainReferee = null;
+        int isMainRef = 0;
+        String refTraining = null;
+
         try
         {
             preparedStmt = conn.prepareStatement(queryGames);
@@ -181,6 +191,10 @@ public class GameDA implements DataAccess<Game>
                 dateRS = rs.getDate("date");
                 eventLogIDRS = rs.getInt("eventLogID");
                 hourRS = rs.getInt("hour");
+                referee1RS = rs.getString("referee1UN");
+                referee2RS = rs.getString("referee2UN");
+                mainRefereeRS = rs.getString("mainRefereeUN");
+
             }
             preparedStmt.close();
 
@@ -253,6 +267,99 @@ public class GameDA implements DataAccess<Game>
 
             owner = new Owner(member.getUserName(), member.getPassword(), member.getName(), homeTeamRS);
             guestTeam = new Team(owner, guestTeamRS, homeFieldRS);
+
+            if(referee1RS != null)
+            {
+                preparedStmt = conn.prepareStatement(queryMembers);
+                preparedStmt.setString(1, referee1RS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    String passwordRS = rs.getString("password");
+                    String roleRS = rs.getString("role");
+                    String nameRS = rs.getString("name");
+                    member = new MemberData(referee1RS, passwordRS, nameRS, roleRS);
+                }
+                preparedStmt.close();
+
+                preparedStmt = conn.prepareStatement(queryReferees);
+                preparedStmt.setString(1, referee1RS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    refTraining = rs.getString("training");
+                    isMainRef = rs.getInt("isMainReferee");
+                }
+                preparedStmt.close();
+                referee1 = new Referee(member.getUserName(), member.getPassword(), member.getName(), refTraining);
+                if(isMainRef != 0)
+                {
+                    referee1.setMainReferee(true);
+                }
+            }
+
+            if(referee2RS != null)
+            {
+                preparedStmt = conn.prepareStatement(queryMembers);
+                preparedStmt.setString(1, referee2RS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    String passwordRS = rs.getString("password");
+                    String roleRS = rs.getString("role");
+                    String nameRS = rs.getString("name");
+                    member = new MemberData(referee2RS, passwordRS, nameRS, roleRS);
+                }
+                preparedStmt.close();
+
+                preparedStmt = conn.prepareStatement(queryReferees);
+                preparedStmt.setString(1, referee2RS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    refTraining = rs.getString("training");
+                    isMainRef = rs.getInt("isMainReferee");
+                }
+                preparedStmt.close();
+                referee2 = new Referee(member.getUserName(), member.getPassword(), member.getName(), refTraining);
+                if(isMainRef != 0)
+                {
+                    referee2.setMainReferee(true);
+                }
+            }
+
+            if(mainRefereeRS != null)
+            {
+                preparedStmt = conn.prepareStatement(queryMembers);
+                preparedStmt.setString(1, mainRefereeRS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    String passwordRS = rs.getString("password");
+                    String roleRS = rs.getString("role");
+                    String nameRS = rs.getString("name");
+                    member = new MemberData(mainRefereeRS, passwordRS, nameRS, roleRS);
+                }
+                preparedStmt.close();
+
+                preparedStmt = conn.prepareStatement(queryReferees);
+                preparedStmt.setString(1, mainRefereeRS);
+                rs = preparedStmt.executeQuery();
+                while(rs.next())
+                {
+                    refTraining = rs.getString("training");
+                    isMainRef = rs.getInt("isMainReferee");
+                }
+                preparedStmt.close();
+                mainReferee = new Referee(member.getUserName(), member.getPassword(), member.getName(), refTraining);
+                if(isMainRef != 0)
+                {
+                    mainReferee.setMainReferee(true);
+                }
+            }
+
+
+
             game = new Game(guestTeam, homeTeam);
             game.setField(fieldRS);
             game.setSeasonID(seasonIDRS);
@@ -260,6 +367,10 @@ public class GameDA implements DataAccess<Game>
             game.setDate(dateRS);
             game.setHour(hourRS);
             game.setEventLogID(eventLogIDRS);
+
+            game.setReferee1(referee1);
+            game.setReferee2(referee2);
+            game.setMainReferee(mainReferee);
 
             conn.close();
         }
@@ -269,4 +380,6 @@ public class GameDA implements DataAccess<Game>
 
         return game;
     }
+
+
 }

@@ -1,13 +1,13 @@
 package Domain;
 
-import DataAccess.OwnerDA;
+import DataAccess.MemberDA;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Representative extends Member
 {
-    //need to add role for this
     public Representative(String username, String password, String name) {
         super(username, password, name, "representative");
     }
@@ -16,18 +16,18 @@ public class Representative extends Member
 //    public Status createGame(){
 //        return Status.Success;
 //    }
-    public Status assignGame(){
-        return Status.Success;
-    }
-    public Status assignRef(){
-        return Status.Success;
-    }
+//    public Status assignGame(){
+//        return Status.Success;
+//    }
+
+
+
 //    public Status setSocerPolicy(){
 //        return Status.Success;
 //    }
-    public Status addRefereeTOGame(){
-        return Status.Success;
-    }
+//    public Status addRefereeTOGame(){
+//        return Status.Success;
+//    }
 
 
     public boolean login(String password) throws Exception {
@@ -37,7 +37,14 @@ public class Representative extends Member
         return this.getPassword().equals(password);
     }
 
-
+    static Representative getRepresentativeFromDB(String username)
+    {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        MemberDA mda = MemberDA.getInstance();
+        Member m = mda.get(map);
+        return new Representative(m.getUserName(), m.getPassword(), m.getName());
+    }
 
 
 }

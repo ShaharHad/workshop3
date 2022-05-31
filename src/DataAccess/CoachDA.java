@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
@@ -87,4 +88,5 @@ public class CoachDA implements DataAccess<Coach> {
 
         return coach;
     }
+
 }

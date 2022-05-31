@@ -1,7 +1,6 @@
 package Domain;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,19 +22,15 @@ class CoachTest
     Map<String, String> keyParamsCoach1;
     Map<String, String> keyParamsCoach2;
 
-    //need to add the users below manually
     @BeforeAll
     public void beforeAll()
     {
-        coach1 = new Coach("coach1", "coach1", "coach1", "main", "master", "barcelona");
-        coach2 = new Coach("coach2", "coach2", "coach2", "secondary", "master", "barcelona");
+        coach1 = new Coach("coach1", "coach1", "Kliff Kingsbury", "head", "master", "barcelona");
+        coach2 = new Coach("coach2", "coach2", "Arthur Smith", "secondary", "master", "barcelona");
         keyParamsCoach1 = new HashMap<>();
         keyParamsCoach2 = new HashMap<>();
         keyParamsCoach1.put("userName", coach1.getUserName());
         keyParamsCoach2.put("userName", coach2.getUserName());
-
-
-
     }
 
     private Stream<Arguments> paramsProvider()
@@ -56,11 +51,7 @@ class CoachTest
             boolean success = c.login(c.getUserName(), c.getPassword());
             assertTrue(success);
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
+        catch (Exception e) { System.out.println(e.getMessage()); }
     }
 
 
@@ -75,7 +66,7 @@ class CoachTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "user doesn't exist");
         }
     }
 
@@ -107,7 +98,7 @@ class CoachTest
 
     @ParameterizedTest
     @MethodSource({"paramsProvider"})
-    void getOwnerFromDBTest(Coach c)
+    void getCoachFromDBTest(Coach c)
     {
         Coach coachDB = Coach.getCoachFromDB(c.getUserName());
         assertEquals(coachDB.getUserName(), c.getUserName());

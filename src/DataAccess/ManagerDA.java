@@ -12,7 +12,8 @@ import java.util.Map;
 
 import static DataAccess.DBConnector.getConnector;
 
-public class ManagerDA implements DataAccess<Manager> {
+public class ManagerDA implements DataAccess<Manager>
+{
     private static final ManagerDA instance = new ManagerDA();
 
     //private constructor to avoid client applications to use constructor

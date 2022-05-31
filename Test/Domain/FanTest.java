@@ -55,7 +55,7 @@ class FanTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -72,7 +72,7 @@ class FanTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class FanTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "parameter is null");
         }
     }
 

@@ -35,7 +35,7 @@ public class Manager extends Member
         map.put("userName", username);
         Manager manager = mda.get(map);
         if (manager == null) {
-            throw new Exception("user not exist");
+            throw new Exception("user doesn't exist");
         } else
         {
             return manager.getPassword().equals(password);

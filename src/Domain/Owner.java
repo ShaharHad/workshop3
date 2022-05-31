@@ -44,22 +44,6 @@ public class Owner extends Member
             return null;
         }
 
-//        switch(key)
-//        {
-//            case "userName":
-//                return this.getUserName();
-//
-//            case "password":
-//                return this.getPassword();
-//
-//            case "name":
-//                return this.getName();
-//
-//            case "teamName":
-//                return this.getTeamName();
-//            default:
-//                return null;
-//        }
     }
 
     public boolean login(String username, String password) throws Exception
@@ -72,7 +56,7 @@ public class Owner extends Member
         map.put("userName", username);
         Member member = oda.get(map);
         if (member == null) {
-            throw new Exception("user not exist");
+            throw new Exception("user doesn't exist");
         } else
         {
             return member.getPassword().equals(password);

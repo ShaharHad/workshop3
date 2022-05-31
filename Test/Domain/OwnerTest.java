@@ -62,7 +62,7 @@ class OwnerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -79,7 +79,7 @@ class OwnerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "user doesn't exist");
         }
     }
 
@@ -102,7 +102,7 @@ class OwnerTest
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            assertEquals(e.getMessage(), "One of the parameters is null");
         }
     }
 

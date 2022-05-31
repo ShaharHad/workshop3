@@ -52,7 +52,7 @@ public class Player extends Member
         map.put("userName", username);
         Player p = pda.get(map);
         if (p == null) {
-            throw new Exception("user not exist");
+            throw new Exception("user doesn't exist");
         }
         return p.getPassword().equals(password);
     }

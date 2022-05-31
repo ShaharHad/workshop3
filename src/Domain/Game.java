@@ -1,8 +1,12 @@
 package Domain;
 
+import DataAccess.GameDA;
+
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game
 {
@@ -15,7 +19,10 @@ public class Game
     EventLog eventLog;
     int seasonID;
     int LeagueID;
-    List<Referee> refereeList;
+//    List<Referee> refereeList;
+    Referee referee1;
+    Referee referee2;
+    Referee mainReferee;
 
     public Game(Team guestGroup, Team homeGroup) throws Exception
     {
@@ -24,7 +31,34 @@ public class Game
         this.guestGroup = guestGroup;
         this.homeGroup = homeGroup;
         this.eventLog = new EventLog();
-        refereeList = new ArrayList<>();
+//        refereeList = new ArrayList<>();
+        this.referee1 = null;
+        this.referee2 = null;
+        this.mainReferee = null;
+    }
+
+    public Referee getReferee1() {
+        return referee1;
+    }
+
+    public void setReferee1(Referee referee1) {
+        this.referee1 = referee1;
+    }
+
+    public Referee getReferee2() {
+        return referee2;
+    }
+
+    public void setReferee2(Referee referee2) {
+        this.referee2 = referee2;
+    }
+
+    public Referee getMainReferee() {
+        return mainReferee;
+    }
+
+    public void setMainReferee(Referee mainReferee) {
+        this.mainReferee = mainReferee;
     }
 
     public java.sql.Date getDate() {
@@ -102,4 +136,14 @@ public class Game
     public int getHour(int hourRS) {
         return this.hour;
     }
+
+//    static Game getGameFromDB(String field, String hour, String date)
+//    {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("fieldName", field);
+//        map.put("hour", hour);
+//        map.put("date", date);
+//        GameDA gda = GameDA.getInstance();
+//        return gda.get(map);
+//    }
 }
