@@ -115,7 +115,6 @@ public class Referee extends Member
 
     public boolean login(String username, String password){
         if (username == null || password == null) {
-//            throw new Exception("One of the parameters is null");
             return false;
         }
         RefereeDA rda = RefereeDA.getInstance();
@@ -123,7 +122,6 @@ public class Referee extends Member
         map.put("userName", username);
         Referee ref = rda.get(map);
         if (ref == null) {
-//            throw new Exception("user not exist");
             return false;
         } else
         {

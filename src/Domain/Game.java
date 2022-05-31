@@ -11,7 +11,7 @@ public class Game
     Team guestGroup;
     Team homeGroup;
     String field;
-    int score;
+//    int score;
     EventLog eventLog;
     int seasonID;
     int LeagueID;
@@ -43,21 +43,21 @@ public class Game
         return homeGroup;
     }
 
-    public void setGuestGroup(Team guestGroup) {
-        this.guestGroup = guestGroup;
-    }
-
-    public void setHomeGroup(Team homeGroup) {
-        this.homeGroup = homeGroup;
-    }
+//    public void setGuestGroup(Team guestGroup) {
+//        this.guestGroup = guestGroup;
+//    }
+//
+//    public void setHomeGroup(Team homeGroup) {
+//        this.homeGroup = homeGroup;
+//    }
 
     public String getField() {
         return field;
     }
 
-    public int getScore() {
-        return score;
-    }
+//    public int getScore() {
+//        return score;
+//    }
 
     public EventLog getEventLog() {
         return eventLog;
@@ -71,9 +71,9 @@ public class Game
         return seasonID;
     }
 
-    public int getLeagueID() {
-        return LeagueID;
-    }
+//    public int getLeagueID() {
+//        return LeagueID;
+//    }
 
     public void setDate(Date date) {
         this.date = date;
@@ -87,9 +87,9 @@ public class Game
         this.field = field;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+//    public void setScore(int score) {
+//        this.score = score;
+//    }
 
     public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
@@ -99,7 +99,7 @@ public class Game
         LeagueID = leagueID;
     }
 
-    public int getHour(int hourRS) {
-        return this.hour;
-    }
+//    public int getHour(int hourRS) {
+//        return this.hour;
+//    }
 }

@@ -34,7 +34,7 @@ class MemberControllerTest
     Map<String, String> keyParamsAriasa;
     Map<String, String> keyParamsRepresentative1;
 
-    //need to add the users below manually
+
     @BeforeAll
     public void beforeAll()
     {
@@ -81,8 +81,6 @@ class MemberControllerTest
     }
 
 
-
-
     @ParameterizedTest
     @MethodSource({"paramsProvider"})
     void userLoginTest(Member m)
@@ -97,7 +95,6 @@ class MemberControllerTest
         {
             assertEquals(success, Status.Success);
         }
-
     }
 
 

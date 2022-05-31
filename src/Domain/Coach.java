@@ -47,7 +47,7 @@ public class Coach extends Member
         map.put("userName", username);
         Member member = cda.get(map);
         if (member == null) {
-            throw new Exception("user not exist");
+            throw new Exception("user doesn't exist");
         } else
         {
             return member.getPassword().equals(password);
